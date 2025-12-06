@@ -1,66 +1,148 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card/Card";
+import { mockEquipment, mockAlerts } from "@/lib/mockData";
+import { Shield, AlertTriangle, HardDrive, Activity } from "lucide-react";
+import { StatusBadge } from "@/components/StatusBadge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table";
+import { Button } from "@/components/ui/Button/Button";
+import Link from 'next/link';
+
+export default function Dashboard() {
+  const seguros = mockEquipment.filter(e => e.estado_seguridad === "Seguro").length;
+  const enRiesgo = mockEquipment.filter(e => e.estado_seguridad === "Advertencia").length;
+  const amenazados = mockEquipment.filter(e => e.estado_seguridad === "Amenaza").length;
+  const alertasActivas = mockAlerts.filter(a => a.estado === "Activa").length;
+
+  const porcentajeSeguro = Math.round((seguros / mockEquipment.length) * 100);
+  const porcentajeRiesgo = Math.round((enRiesgo / mockEquipment.length) * 100);
+  // Unused variable kept for logic parity if needed later, but commented out to avoid linter warning if strict
+  // const porcentajeAmenaza = Math.round((amenazados / mockEquipment.length) * 100);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold">Dashboard de Seguridad</h1>
+        <p className="text-muted-foreground">Vista general del estado de protección de su empresa</p>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Equipos Seguros</CardTitle>
+            <Shield className="h-4 w-4 text-success" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{porcentajeSeguro}%</div>
+            <p className="text-xs text-muted-foreground">{seguros} de {mockEquipment.length} equipos</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">En Riesgo</CardTitle>
+            <AlertTriangle className="h-4 w-4 text-warning" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{porcentajeRiesgo}%</div>
+            <p className="text-xs text-muted-foreground">{enRiesgo} equipos requieren atención</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Amenazas Activas</CardTitle>
+            <Activity className="h-4 w-4 text-danger" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{amenazados}</div>
+            <p className="text-xs text-muted-foreground">Requieren acción inmediata</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Alertas Activas</CardTitle>
+            <HardDrive className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{alertasActivas}</div>
+            <p className="text-xs text-muted-foreground">Notificaciones pendientes</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Estado de Equipos</CardTitle>
+          <CardDescription>Resumen de todos los equipos registrados en el sistema</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Equipo</TableHead>
+                <TableHead>Usuario</TableHead>
+                <TableHead>Ubicación</TableHead>
+                <TableHead>Estado Seguridad</TableHead>
+                <TableHead>Conexión Agente</TableHead>
+                <TableHead>Plan</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mockEquipment.map((equipo) => (
+                <TableRow key={equipo.id}>
+                  <TableCell className="font-medium">{equipo.nombre}</TableCell>
+                  <TableCell>{equipo.usuario}</TableCell>
+                  <TableCell>{equipo.ubicacion}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={equipo.estado_seguridad} type="security" />
+                  </TableCell>
+                  <TableCell>
+                    <StatusBadge status={equipo.estado_conexion_agente} type="connection" />
+                  </TableCell>
+                  <TableCell>{equipo.plan}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div className="mt-4 flex justify-end">
+            <Link href="/equipos">
+              <Button>Ver todos los equipos</Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+
+      {alertasActivas > 0 && (
+        <Card className="border-danger">
+          <CardHeader>
+            <CardTitle className="text-danger">Alertas que Requieren Atención</CardTitle>
+            <CardDescription>Revise y gestione las alertas activas del sistema</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {mockAlerts.filter(a => a.estado === "Activa").map((alerta) => (
+                <div key={alerta.id} className="p-3 bg-muted rounded-lg flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <StatusBadge status={alerta.nivel} type="alert" />
+                      <span className="font-medium">{alerta.equipo_nombre}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{alerta.descripcion}</p>
+                  </div>
+                  <Link href="/alertas">
+                    <Button size="sm" variant="outline">
+                      Ver detalles
+                    </Button>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

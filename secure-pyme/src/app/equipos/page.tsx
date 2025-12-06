@@ -1,0 +1,462 @@
+"use client";
+
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card/Card";
+import { mockEquipment } from "@/lib/mockData";
+import { StatusBadge } from "@/components/StatusBadge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table";
+import { Button } from "@/components/ui/Button/Button";
+import { Badge } from "@/components/ui/Badge/Badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { useToast } from "@/hooks/use-toast";
+import { Eye, Play, Download, RefreshCw, AlertTriangle, Plus } from "lucide-react";
+import { Progress } from "@/components/ui/Progress";
+
+// Types extracted locally since we don't have a shared types file yet or it's implicitly imported
+// Assuming types match mockData
+interface Equipment {
+    id: string;
+    nombre: string;
+    usuario: string;
+    OS: string;
+    estado_seguridad: string;
+    estado_conexion_agente: string;
+    version_agente: string;
+    ubicacion: string;
+    plan: string;
+}
+
+export default function Equipos() {
+    const [filtroEstado, setFiltroEstado] = useState<string>("todos");
+    const [filtroUbicacion, setFiltroUbicacion] = useState<string>("todos");
+    const [equipoSeleccionado, setEquipoSeleccionado] = useState<string | null>(null);
+    const [dialogAbierto, setDialogAbierto] = useState(false);
+    const [dialogDetallesAbierto, setDialogDetallesAbierto] = useState(false);
+    const [dialogAgregarAbierto, setDialogAgregarAbierto] = useState(false);
+    const [accionEnProgreso, setAccionEnProgreso] = useState(false);
+    const [progreso, setProgreso] = useState(0);
+    const [claveAgente, setClaveAgente] = useState("");
+    const { toast } = useToast();
+
+    const equiposFiltrados = mockEquipment.filter(equipo => {
+        const cumpleFiltroEstado = filtroEstado === "todos" || equipo.estado_seguridad === filtroEstado;
+        const cumpleFiltroUbicacion = filtroUbicacion === "todos" || equipo.ubicacion === filtroUbicacion;
+        return cumpleFiltroEstado && cumpleFiltroUbicacion;
+    });
+
+    const ubicaciones = Array.from(new Set(mockEquipment.map(e => e.ubicacion)));
+
+    const maxEquiposPorPlan: Record<string, number> = {
+        "Básico": 5,
+        "Estándar": 20,
+        "Ejecutivo": 100
+    };
+
+    const planActual = "Estándar";
+    const equiposActuales = mockEquipment.length;
+    const maxEquipos = maxEquiposPorPlan[planActual];
+
+    const getThreatDetails = (equipo: Equipment) => {
+        if (equipo.estado_seguridad === "Amenaza") {
+            return {
+                title: "Amenaza Crítica Detectada",
+                description: "Se detectaron actividades sospechosas en este equipo que requieren atención inmediata.",
+                details: [
+                    "Cambio masivo de archivos (>500 archivos modificados en 10 min)",
+                    "Patrón consistente con ransomware detectado",
+                    "Procesos sospechosos ejecutándose en segundo plano",
+                    "Comunicación con IPs en listas de amenazas"
+                ],
+                actions: [
+                    "Aislar inmediatamente el equipo de la red",
+                    "No apagar el equipo (preservar evidencia forense)",
+                    "Restaurar desde el último respaldo verificado",
+                    "Ejecutar análisis forense completo"
+                ]
+            };
+        } else if (equipo.estado_seguridad === "Advertencia") {
+            return {
+                title: "Advertencia de Seguridad",
+                description: "Se detectaron condiciones que podrían comprometer la seguridad del equipo.",
+                details: [
+                    "Versión del agente desactualizada con vulnerabilidades conocidas",
+                    "Políticas de seguridad no completamente aplicadas",
+                    "Intentos de conexión de dispositivos USB no autorizados",
+                    "Certificados SSL próximos a vencer"
+                ],
+                actions: [
+                    "Actualizar agente a la última versión",
+                    "Verificar y aplicar todas las políticas de seguridad",
+                    "Revisar lista de dispositivos autorizados",
+                    "Programar mantenimiento preventivo"
+                ]
+            };
+        }
+        return null;
+    };
+
+    const simularAccion = (accion: string, equipoNombre: string) => {
+        setAccionEnProgreso(true);
+        setProgreso(0);
+
+        const intervalo = setInterval(() => {
+            setProgreso(prev => {
+                if (prev >= 100) {
+                    clearInterval(intervalo);
+                    setAccionEnProgreso(false);
+                    toast({
+                        title: "Acción completada",
+                        description: `${accion} en ${equipoNombre} finalizado exitosamente`,
+                        type: "success"
+                    });
+                    setDialogAbierto(false);
+                    return 100;
+                }
+                return prev + 20;
+            });
+        }, 500);
+    };
+
+    const verDetalles = (equipoId: string) => {
+        const equipo = mockEquipment.find(e => e.id === equipoId);
+        if (equipo && (equipo.estado_seguridad === "Amenaza" || equipo.estado_seguridad === "Advertencia")) {
+            setEquipoSeleccionado(equipoId);
+            setDialogDetallesAbierto(true);
+        } else {
+            setEquipoSeleccionado(equipoId);
+            setDialogAbierto(true);
+            setProgreso(0);
+        }
+    };
+
+    const agregarDispositivo = () => {
+        if (!claveAgente.trim()) {
+            toast({
+                title: "Error",
+                description: "Por favor ingrese la clave del agente",
+                variant: "destructive"
+            });
+            return;
+        }
+
+        toast({
+            title: "Dispositivo agregado",
+            description: `El dispositivo con clave ${claveAgente} se está conectando...`,
+            type: "success"
+        });
+        setDialogAgregarAbierto(false);
+        setClaveAgente("");
+    };
+
+    const equipoActual = mockEquipment.find(e => e.id === equipoSeleccionado);
+
+    return (
+        <div className="space-y-6">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-3xl font-bold">Gestión de Equipos</h1>
+                    <p className="text-muted-foreground">
+                        Administre todos los equipos conectados con sus agentes de seguridad
+                    </p>
+                </div>
+                <div className="flex items-center gap-4">
+                    <div className="text-right">
+                        <p className="text-sm text-muted-foreground">Equipos en el plan</p>
+                        <p className="text-2xl font-bold">{equiposActuales} / {maxEquipos}</p>
+                    </div>
+                    <Button
+                        onClick={() => setDialogAgregarAbierto(true)}
+                        disabled={equiposActuales >= maxEquipos}
+                    >
+                        <Plus className="mr-2 h-4 w-4" />
+                        Agregar Equipo
+                    </Button>
+                </div>
+            </div>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Filtros</CardTitle>
+                    <CardDescription>Filtre equipos por estado de seguridad y ubicación</CardDescription>
+                </CardHeader>
+                <CardContent className="flex gap-4">
+                    <div className="flex-1">
+                        <Select value={filtroEstado} onValueChange={setFiltroEstado}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Estado de seguridad" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="todos">Todos los estados</SelectItem>
+                                <SelectItem value="Seguro">Seguro</SelectItem>
+                                <SelectItem value="Advertencia">Advertencia</SelectItem>
+                                <SelectItem value="Amenaza">Amenaza</SelectItem>
+                                <SelectItem value="Desconectado">Desconectado</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex-1">
+                        <Select value={filtroUbicacion} onValueChange={setFiltroUbicacion}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Ubicación" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="todos">Todas las ubicaciones</SelectItem>
+                                {ubicaciones.map(ubicacion => (
+                                    <SelectItem key={ubicacion} value={ubicacion}>{ubicacion}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Equipos Registrados ({equiposFiltrados.length})</CardTitle>
+                    <CardDescription>
+                        Vista detallada de todos los equipos con sus agentes de seguridad
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>ID</TableHead>
+                                <TableHead>Equipo</TableHead>
+                                <TableHead>Usuario</TableHead>
+                                <TableHead>Sistema Operativo</TableHead>
+                                <TableHead>Estado Seguridad</TableHead>
+                                <TableHead>Conexión Agente</TableHead>
+                                <TableHead>Versión</TableHead>
+                                <TableHead>Ubicación</TableHead>
+                                <TableHead>Plan</TableHead>
+                                <TableHead>Acciones</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {equiposFiltrados.map((equipo) => (
+                                <TableRow key={equipo.id}>
+                                    <TableCell className="font-mono text-xs">{equipo.id}</TableCell>
+                                    <TableCell className="font-medium">{equipo.nombre}</TableCell>
+                                    <TableCell>{equipo.usuario}</TableCell>
+                                    <TableCell>{equipo.OS}</TableCell>
+                                    <TableCell>
+                                        <StatusBadge status={equipo.estado_seguridad} type="security" />
+                                    </TableCell>
+                                    <TableCell>
+                                        <StatusBadge status={equipo.estado_conexion_agente} type="connection" />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Badge variant="outline">{equipo.version_agente}</Badge>
+                                    </TableCell>
+                                    <TableCell>{equipo.ubicacion}</TableCell>
+                                    <TableCell>{equipo.plan}</TableCell>
+                                    <TableCell>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => verDetalles(equipo.id)}
+                                        >
+                                            <Eye className="h-4 w-4" />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+
+            {/* Dialog de detalles normales */}
+            <Dialog open={dialogAbierto} onOpenChange={setDialogAbierto}>
+                <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                        <DialogTitle>Detalles del Equipo</DialogTitle>
+                        <DialogDescription>
+                            Información completa y acciones disponibles
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    {equipoActual && (
+                        <div className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p className="text-sm font-medium">Nombre del equipo</p>
+                                    <p className="text-sm text-muted-foreground">{equipoActual.nombre}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">ID</p>
+                                    <p className="text-sm text-muted-foreground font-mono">{equipoActual.id}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">Usuario</p>
+                                    <p className="text-sm text-muted-foreground">{equipoActual.usuario}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">Sistema Operativo</p>
+                                    <p className="text-sm text-muted-foreground">{equipoActual.OS}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">Versión del Agente</p>
+                                    <p className="text-sm text-muted-foreground">{equipoActual.version_agente}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">Plan</p>
+                                    <p className="text-sm text-muted-foreground">{equipoActual.plan}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">Estado de Seguridad</p>
+                                    <StatusBadge status={equipoActual.estado_seguridad} type="security" />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">Conexión del Agente</p>
+                                    <StatusBadge status={equipoActual.estado_conexion_agente} type="connection" />
+                                </div>
+                            </div>
+
+                            {accionEnProgreso && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium">Procesando acción...</p>
+                                    <Progress value={progreso} />
+                                </div>
+                            )}
+
+                            <div className="flex gap-2 pt-4">
+                                <Button
+                                    variant="outline"
+                                    onClick={() => simularAccion("Análisis completo", equipoActual.nombre)}
+                                    disabled={accionEnProgreso}
+                                >
+                                    <Play className="h-4 w-4 mr-2" />
+                                    Forzar Análisis
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    onClick={() => simularAccion("Descarga de respaldo", equipoActual.nombre)}
+                                    disabled={accionEnProgreso}
+                                >
+                                    <Download className="h-4 w-4 mr-2" />
+                                    Descargar Respaldo
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    onClick={() => simularAccion("Sincronización", equipoActual.nombre)}
+                                    disabled={accionEnProgreso}
+                                >
+                                    <RefreshCw className="h-4 w-4 mr-2" />
+                                    Sincronizar Agente
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </DialogContent>
+            </Dialog>
+
+            {/* Dialog de detalles de amenaza/advertencia */}
+            <Dialog open={dialogDetallesAbierto} onOpenChange={setDialogDetallesAbierto}>
+                <DialogContent className="max-w-2xl">
+                    {equipoActual && getThreatDetails(equipoActual) && (
+                        <>
+                            <DialogHeader>
+                                <DialogTitle className="flex items-center gap-2">
+                                    <AlertTriangle className={`h-5 w-5 ${equipoActual.estado_seguridad === "Amenaza" ? "text-danger" : "text-warning"}`} />
+                                    {getThreatDetails(equipoActual)?.title}
+                                </DialogTitle>
+                                <DialogDescription>
+                                    {equipoActual.nombre} - {equipoActual.id}
+                                </DialogDescription>
+                            </DialogHeader>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <p className="text-sm text-muted-foreground mb-3">
+                                        {getThreatDetails(equipoActual)?.description}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-semibold mb-2">Detalles Detectados:</h4>
+                                    <ul className="space-y-1">
+                                        {getThreatDetails(equipoActual)?.details.map((detail, idx) => (
+                                            <li key={idx} className="text-sm flex items-start gap-2">
+                                                <span className="text-danger mt-1">•</span>
+                                                <span>{detail}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-semibold mb-2">Acciones Recomendadas:</h4>
+                                    <ol className="space-y-1">
+                                        {getThreatDetails(equipoActual)?.actions.map((action, idx) => (
+                                            <li key={idx} className="text-sm flex items-start gap-2">
+                                                <span className="font-medium">{idx + 1}.</span>
+                                                <span>{action}</span>
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </div>
+
+                                <div className="flex gap-2 pt-4 border-t">
+                                    <Button variant="destructive" className="flex-1">
+                                        Aislar Equipo
+                                    </Button>
+                                    <Button variant="default" className="flex-1">
+                                        Ir a Respaldos
+                                    </Button>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </DialogContent>
+            </Dialog>
+
+            {/* Dialog para agregar dispositivo */}
+            <Dialog open={dialogAgregarAbierto} onOpenChange={setDialogAgregarAbierto}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Agregar Nuevo Dispositivo</DialogTitle>
+                        <DialogDescription>
+                            Ingrese la clave única del agente instalado en el dispositivo
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="space-y-4">
+                        <div>
+                            <Label htmlFor="agentKey">Clave del Agente</Label>
+                            <Input
+                                id="agentKey"
+                                placeholder="XXXX-XXXX-XXXX-XXXX"
+                                value={claveAgente}
+                                onChange={(e) => setClaveAgente(e.target.value)}
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                                La clave se genera automáticamente al instalar el agente en el dispositivo
+                            </p>
+                        </div>
+
+                        <div className="bg-muted p-3 rounded-md">
+                            <p className="text-sm font-medium mb-1">Plan Actual: {planActual}</p>
+                            <p className="text-xs text-muted-foreground">
+                                Equipos disponibles: {maxEquipos - equiposActuales} de {maxEquipos}
+                            </p>
+                        </div>
+
+                        <div className="flex gap-2">
+                            <Button onClick={agregarDispositivo} className="flex-1">
+                                Conectar Dispositivo
+                            </Button>
+                            <Button variant="outline" onClick={() => setDialogAgregarAbierto(false)}>
+                                Cancelar
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}

@@ -1,0 +1,54 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    /* full */
+    border: 1px solid transparent;
+    padding: 0.25rem 0.625rem;
+    /* px-2.5 py-0.5 */
+    font-size: 0.75rem;
+    /* text-xs */
+    font-weight: 600;
+    /* font-semibold */
+    transition-property: color, background-color, border-color;
+    transition-duration: 200ms;
+}
+
+.badge:focus {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+}
+
+.default {
+    border-color: transparent;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+
+.default:hover {
+    background-color: hsl(var(--primary) / 0.8);
+}
+
+.secondary {
+    border-color: transparent;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+}
+
+.secondary:hover {
+    background-color: hsl(var(--secondary) / 0.8);
+}
+
+.destructive {
+    border-color: transparent;
+    background-color: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+}
+
+.destructive:hover {
+    background-color: hsl(var(--destructive) / 0.8);
+}
+
+.outline {
+    color: hsl(var(--foreground));
+}
