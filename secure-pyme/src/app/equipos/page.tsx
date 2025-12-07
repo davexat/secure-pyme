@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/Label";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, Play, Download, RefreshCw, AlertTriangle, Plus } from "lucide-react";
 import { Progress } from "@/components/ui/Progress";
+import styles from "./page.module.css";
 
 // Types extracted locally since we don't have a shared types file yet or it's implicitly imported
 // Assuming types match mockData
@@ -147,18 +148,18 @@ export default function Equipos() {
     const equipoActual = mockEquipment.find(e => e.id === equipoSeleccionado);
 
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
+        <div className={styles.container}>
+            <div className={styles.header}>
                 <div>
-                    <h1 className="text-3xl font-bold">Gestión de Equipos</h1>
-                    <p className="text-muted-foreground">
+                    <h1 className={styles.title}>Gestión de Equipos</h1>
+                    <p className={styles.subtitle}>
                         Administre todos los equipos conectados con sus agentes de seguridad
                     </p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Total Equipos</p>
-                        <p className="text-2xl font-bold">{equiposActuales}</p>
+                <div className={styles.headerActions}>
+                    <div className={styles.stats}>
+                        <p className={styles.statsLabel}>Total Equipos</p>
+                        <p className={styles.statsValue}>{equiposActuales}</p>
                     </div>
                     <Button
                         onClick={() => setDialogAgregarAbierto(true)}
@@ -174,8 +175,8 @@ export default function Equipos() {
                     <CardTitle>Filtros</CardTitle>
                     <CardDescription>Filtre equipos por estado de seguridad y ubicación</CardDescription>
                 </CardHeader>
-                <CardContent className="flex gap-4">
-                    <div className="flex-1">
+                <CardContent className={styles.filtersContent}>
+                    <div className={styles.filterItem}>
                         <Select value={filtroEstado} onValueChange={setFiltroEstado}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Estado de seguridad" />
@@ -189,7 +190,7 @@ export default function Equipos() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex-1">
+                    <div className={styles.filterItem}>
                         <Select value={filtroUbicacion} onValueChange={setFiltroUbicacion}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Ubicación" />
@@ -274,34 +275,34 @@ export default function Equipos() {
 
                     {equipoActual && (
                         <div className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className={styles.dialogGrid}>
                                 <div>
-                                    <p className="text-sm font-medium">Nombre del equipo</p>
-                                    <p className="text-sm text-muted-foreground">{equipoActual.nombre}</p>
+                                    <p className={styles.dialogLabel}>Nombre del equipo</p>
+                                    <p className={styles.dialogTextValue}>{equipoActual.nombre}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium">ID</p>
-                                    <p className="text-sm text-muted-foreground font-mono">{equipoActual.id}</p>
+                                    <p className={styles.dialogLabel}>ID</p>
+                                    <p className={styles.dialogValue}>{equipoActual.id}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium">Usuario</p>
-                                    <p className="text-sm text-muted-foreground">{equipoActual.usuario}</p>
+                                    <p className={styles.dialogLabel}>Usuario</p>
+                                    <p className={styles.dialogTextValue}>{equipoActual.usuario}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium">Sistema Operativo</p>
-                                    <p className="text-sm text-muted-foreground">{equipoActual.OS}</p>
+                                    <p className={styles.dialogLabel}>Sistema Operativo</p>
+                                    <p className={styles.dialogTextValue}>{equipoActual.OS}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium">Versión del Agente</p>
-                                    <p className="text-sm text-muted-foreground">{equipoActual.version_agente}</p>
+                                    <p className={styles.dialogLabel}>Versión del Agente</p>
+                                    <p className={styles.dialogTextValue}>{equipoActual.version_agente}</p>
                                 </div>
                                 {/* Plan details removed */}
                                 <div>
-                                    <p className="text-sm font-medium">Estado de Seguridad</p>
+                                    <p className={styles.dialogLabel}>Estado de Seguridad</p>
                                     <StatusBadge status={equipoActual.estado_seguridad} type="security" />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium">Conexión del Agente</p>
+                                    <p className={styles.dialogLabel}>Conexión del Agente</p>
                                     <StatusBadge status={equipoActual.estado_conexion_agente} type="connection" />
                                 </div>
                             </div>
@@ -313,7 +314,7 @@ export default function Equipos() {
                                 </div>
                             )}
 
-                            <div className="flex gap-2 pt-4">
+                            <div className={styles.dialogActions}>
                                 <Button
                                     variant="outline"
                                     onClick={() => simularAccion("Análisis completo", equipoActual.nombre)}

@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AlertTriangle, CheckCircle, HelpCircle } from "lucide-react";
 
 import { Alert } from "@/types";
+import styles from "./page.module.css";
 
 export default function Alertas() {
     const [alertas, setAlertas] = useState<Alert[]>(mockAlerts);
@@ -44,23 +45,23 @@ export default function Alertas() {
     const alertasResueltas = alertas.filter(a => a.estado === "Resuelta");
 
     return (
-        <div className="space-y-6">
+        <div className={styles.container}>
             <div>
-                <h1 className="text-3xl font-bold">Centro de Alertas</h1>
-                <p className="text-muted-foreground">
+                <h1 className={styles.headerTitle}>Centro de Alertas</h1>
+                <p className={styles.headerDescription}>
                     Gestione y responda a las alertas de seguridad del sistema
                 </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className={styles.statsGrid}>
                 <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Alertas Activas</CardTitle>
+                    <CardHeader className={styles.statCardHeader}>
+                        <CardTitle className={styles.statTitle}>Alertas Activas</CardTitle>
                         <AlertTriangle className="h-4 w-4 text-danger" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{alertasActivas.length}</div>
-                        <p className="text-xs text-muted-foreground">Requieren atención</p>
+                        <div className={styles.statValue}>{alertasActivas.length}</div>
+                        <p className={styles.statLabel}>Requieren atención</p>
                     </CardContent>
                 </Card>
 
@@ -70,21 +71,21 @@ export default function Alertas() {
                         <CheckCircle className="h-4 w-4 text-success" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{alertasResueltas.length}</div>
-                        <p className="text-xs text-muted-foreground">En las últimas 24h</p>
+                        <div className={styles.statValue}>{alertasResueltas.length}</div>
+                        <p className={styles.statLabel}>En las últimas 24h</p>
                     </CardContent>
                 </Card>
 
                 <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Alertas Críticas</CardTitle>
+                    <CardHeader className={styles.statCardHeader}>
+                        <CardTitle className={styles.statTitle}>Alertas Críticas</CardTitle>
                         <AlertTriangle className="h-4 w-4 text-danger" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">
+                        <div className={styles.statValue}>
                             {alertasActivas.filter(a => a.nivel === "Alta").length}
                         </div>
-                        <p className="text-xs text-muted-foreground">Prioridad alta</p>
+                        <p className={styles.statLabel}>Prioridad alta</p>
                     </CardContent>
                 </Card>
             </div>
@@ -96,32 +97,32 @@ export default function Alertas() {
                         Alertas que requieren atención inmediata o seguimiento
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className={styles.alertList}>
                     {alertasActivas.length === 0 ? (
-                        <div className="text-center py-8 text-muted-foreground">
-                            <CheckCircle className="h-12 w-12 mx-auto mb-2 text-success" />
+                        <div className={styles.emptyState}>
+                            <CheckCircle className={styles.emptyIcon} />
                             <p>No hay alertas activas en este momento</p>
                         </div>
                     ) : (
                         alertasActivas.map((alerta) => (
-                            <div key={alerta.id} className="p-4 border rounded-lg space-y-3">
-                                <div className="flex items-start justify-between">
+                            <div key={alerta.id} className={styles.alertItem}>
+                                <div className={styles.alertHeader}>
                                     <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-2">
+                                        <div className={styles.alertMeta}>
                                             <StatusBadge status={alerta.nivel} type="alert" />
-                                            <span className="font-medium">{alerta.equipo_nombre}</span>
-                                            <span className="text-xs text-muted-foreground">
+                                            <span className={styles.alertTeam}>{alerta.equipo_nombre}</span>
+                                            <span className={styles.alertDate}>
                                                 {new Date(alerta.fecha).toLocaleString('es-ES')}
                                             </span>
                                         </div>
-                                        <p className="text-sm mb-2">{alerta.descripcion}</p>
-                                        <div className="bg-muted p-3 rounded text-sm">
-                                            <p className="font-medium mb-1">Recomendación:</p>
+                                        <p className={styles.alertDesc}>{alerta.descripcion}</p>
+                                        <div className={styles.alertRec}>
+                                            <p className={styles.alertRecTitle}>Recomendación:</p>
                                             <p>{alerta.recomendacion}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className={styles.alertActions}>
                                     <Button
                                         size="sm"
                                         variant="outline"
@@ -157,19 +158,19 @@ export default function Alertas() {
                     <CardTitle>Alertas Resueltas</CardTitle>
                     <CardDescription>Historial de alertas gestionadas</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className={styles.resolvedList}>
                     {alertasResueltas.map((alerta) => (
-                        <div key={alerta.id} className="p-3 border rounded-lg opacity-70">
-                            <div className="flex items-center justify-between">
+                        <div key={alerta.id} className={styles.resolvedItem}>
+                            <div className={styles.resolvedHeader}>
                                 <div>
-                                    <div className="flex items-center gap-2 mb-1">
+                                    <div className={styles.resolvedMeta}>
                                         <CheckCircle className="h-4 w-4 text-success" />
                                         <span className="font-medium">{alerta.equipo_nombre}</span>
                                         <StatusBadge status={alerta.nivel} type="alert" />
                                     </div>
-                                    <p className="text-sm text-muted-foreground">{alerta.descripcion}</p>
+                                    <p className={styles.resolvedDesc}>{alerta.descripcion}</p>
                                 </div>
-                                <span className="text-xs text-muted-foreground">
+                                <span className={styles.alertDate}>
                                     {new Date(alerta.fecha).toLocaleString('es-ES')}
                                 </span>
                             </div>
@@ -188,13 +189,13 @@ export default function Alertas() {
                     </DialogHeader>
 
                     {alertaSeleccionada && (
-                        <div className="space-y-4">
-                            <div className="space-y-2">
-                                <div className="flex items-center gap-2">
+                        <div className={styles.dialogContent}>
+                            <div className={styles.dialogMeta}>
+                                <div className={styles.dialogHeaderRow}>
                                     <StatusBadge status={alertaSeleccionada.nivel} type="alert" />
                                     <span className="font-medium">{alertaSeleccionada.equipo_nombre}</span>
                                 </div>
-                                <p className="text-sm text-muted-foreground">
+                                <p className={styles.alertDate}>
                                     {new Date(alertaSeleccionada.fecha).toLocaleString('es-ES')}
                                 </p>
                             </div>
@@ -204,12 +205,12 @@ export default function Alertas() {
                                 <p className="text-sm">{alertaSeleccionada.descripcion}</p>
                             </div>
 
-                            <div className="bg-primary/10 p-3 rounded">
+                            <div className={styles.dialogRec}>
                                 <p className="font-medium mb-1">Siguiente paso recomendado:</p>
                                 <p className="text-sm">{alertaSeleccionada.recomendacion}</p>
                             </div>
 
-                            <div className="flex gap-2 pt-4">
+                            <div className={styles.dialogFooter}>
                                 <Button
                                     onClick={() => marcarComoResuelta(alertaSeleccionada.id)}
                                     className="flex-1"

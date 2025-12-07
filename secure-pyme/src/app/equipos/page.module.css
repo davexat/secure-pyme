@@ -1,0 +1,94 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 1.875rem;
+    /* 3xl */
+    font-weight: 700;
+}
+
+.subtitle {
+    color: hsl(var(--muted-foreground));
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stats {
+    text-align: right;
+}
+
+.statsLabel {
+    font-size: 0.875rem;
+    /* sm */
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.statsValue {
+    font-size: 1.5rem;
+    /* 2xl */
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.filtersContent {
+    display: flex;
+    gap: 1rem;
+}
+
+.filterItem {
+    flex: 1;
+}
+
+/* Dialog content styles */
+.dialogGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.dialogLabel {
+    font-size: 0.875rem;
+    /* sm */
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+
+.dialogValue {
+    font-size: 0.875rem;
+    /* sm */
+    color: hsl(var(--muted-foreground));
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.dialogTextValue {
+    font-size: 0.875rem;
+    /* sm */
+    color: hsl(var(--muted-foreground));
+}
+
+.actionProgress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dialogActions {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 1rem;
+}

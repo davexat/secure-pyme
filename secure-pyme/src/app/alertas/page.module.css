@@ -1,0 +1,200 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.headerTitle {
+    font-size: 1.875rem;
+    /* 3xl */
+    font-weight: 700;
+}
+
+.headerDescription {
+    color: hsl(var(--muted-foreground));
+}
+
+.statsGrid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.statCardHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+}
+
+.statTitle {
+    font-size: 0.875rem;
+    /* sm */
+    font-weight: 500;
+    margin: 0;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    /* 2xl */
+    font-weight: 700;
+    line-height: 2rem;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    /* xs */
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.alertList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.emptyState {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.emptyIcon {
+    height: 3rem;
+    width: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--success));
+}
+
+.alertItem {
+    padding: 1rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.alertHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.alertMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.alertTeam {
+    font-weight: 500;
+}
+
+.alertDate {
+    font-size: 0.75rem;
+    /* xs */
+    color: hsl(var(--muted-foreground));
+}
+
+.alertDesc {
+    font-size: 0.875rem;
+    /* sm */
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.alertRec {
+    background-color: hsl(var(--muted));
+    padding: 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+    /* sm */
+}
+
+.alertRecTitle {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.alertActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Resolved Alertas List */
+.resolvedList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resolvedItem {
+    padding: 0.75rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    opacity: 0.7;
+}
+
+.resolvedHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.resolvedMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.resolvedDesc {
+    font-size: 0.875rem;
+    /* sm */
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+/* Dialog content styles */
+.dialogContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dialogMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dialogHeaderRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dialogRec {
+    background-color: hsl(var(--primary) / 0.1);
+    padding: 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+}
+
+.dialogFooter {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 1rem;
+}

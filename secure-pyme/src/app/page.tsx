@@ -8,6 +8,8 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table";
 import { Button } from "@/components/ui/Button/Button";
 import Link from 'next/link';
+import styles from './page.module.css';
+import { cn } from "@/lib/utils";
 
 export default function Dashboard() {
   const seguros = mockEquipment.filter(e => e.estado_seguridad === "Seguro").length;
@@ -21,54 +23,54 @@ export default function Dashboard() {
   // const porcentajeAmenaza = Math.round((amenazados / mockEquipment.length) * 100);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Dashboard de Seguridad</h1>
-        <p className="text-muted-foreground">Vista general del estado de protección de su empresa</p>
+    <div className={styles.dashboard}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Dashboard de Seguridad</h1>
+        <p className={styles.subtitle}>Vista general del estado de protección de su empresa</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Equipos Seguros</CardTitle>
-            <Shield className="h-4 w-4 text-success" />
+      <div className={styles.statusGrid}>
+        <Card className={styles.cardSafe}>
+          <CardHeader className={styles.cardHeader}>
+            <CardTitle className={styles.cardTitle}>Equipos Seguros</CardTitle>
+            <Shield className={cn("h-4 w-4", styles.textSuccess)} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{porcentajeSeguro}%</div>
-            <p className="text-xs text-muted-foreground">{seguros} de {mockEquipment.length} equipos</p>
+            <div className={styles.cardValue}>{porcentajeSeguro}%</div>
+            <p className={styles.cardLabel}>{seguros} de {mockEquipment.length} equipos</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">En Riesgo</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-warning" />
+        <Card className={styles.cardWarning}>
+          <CardHeader className={styles.cardHeader}>
+            <CardTitle className={styles.cardTitle}>En Riesgo</CardTitle>
+            <AlertTriangle className={cn("h-4 w-4", styles.textWarning)} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{porcentajeRiesgo}%</div>
-            <p className="text-xs text-muted-foreground">{enRiesgo} equipos requieren atención</p>
+            <div className={styles.cardValue}>{porcentajeRiesgo}%</div>
+            <p className={styles.cardLabel}>{enRiesgo} equipos requieren atención</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Amenazas Activas</CardTitle>
-            <Activity className="h-4 w-4 text-danger" />
+        <Card className={styles.cardDanger}>
+          <CardHeader className={styles.cardHeader}>
+            <CardTitle className={styles.cardTitle}>Amenazas Activas</CardTitle>
+            <Activity className={cn("h-4 w-4", styles.textDanger)} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{amenazados}</div>
-            <p className="text-xs text-muted-foreground">Requieren acción inmediata</p>
+            <div className={styles.cardValue}>{amenazados}</div>
+            <p className={styles.cardLabel}>Requieren acción inmediata</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Alertas Activas</CardTitle>
-            <HardDrive className="h-4 w-4 text-primary" />
+        <Card className={styles.cardAlert}>
+          <CardHeader className={styles.cardHeader}>
+            <CardTitle className={styles.cardTitle}>Alertas Activas</CardTitle>
+            <HardDrive className={cn("h-4 w-4", styles.textPrimary)} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{alertasActivas}</div>
-            <p className="text-xs text-muted-foreground">Notificaciones pendientes</p>
+            <div className={styles.cardValue}>{alertasActivas}</div>
+            <p className={styles.cardLabel}>Notificaciones pendientes</p>
           </CardContent>
         </Card>
       </div>
@@ -107,7 +109,7 @@ export default function Dashboard() {
               ))}
             </TableBody>
           </Table>
-          <div className="mt-4 flex justify-end">
+          <div className={styles.tableActions}>
             <Link href="/equipos">
               <Button>Ver todos los equipos</Button>
             </Link>
@@ -122,15 +124,15 @@ export default function Dashboard() {
             <CardDescription>Revise y gestione las alertas activas del sistema</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
+            <div className={styles.alertList}>
               {mockAlerts.filter(a => a.estado === "Activa").map((alerta) => (
-                <div key={alerta.id} className="p-3 bg-muted rounded-lg flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                <div key={alerta.id} className={styles.alertItem}>
+                  <div className={styles.alertContent}>
+                    <div className={styles.alertHeader}>
                       <StatusBadge status={alerta.nivel} type="alert" />
                       <span className="font-medium">{alerta.equipo_nombre}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">{alerta.descripcion}</p>
+                    <p className={styles.alertDescription}>{alerta.descripcion}</p>
                   </div>
                   <Link href="/alertas">
                     <Button size="sm" variant="outline">
