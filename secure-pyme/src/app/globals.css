@@ -374,3 +374,27 @@ a {
 .space-y-0>*+* {
   margin-top: 0;
 }
+
+.space-y-1\.5>*+* {
+  margin-top: 0.375rem;
+}
+
+.text-card-foreground {
+  color: hsl(var(--card-foreground));
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.leading-none {
+  line-height: 1;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+.pt-0 {
+  padding-top: 0;
+}

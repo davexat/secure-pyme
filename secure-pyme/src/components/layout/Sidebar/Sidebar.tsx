@@ -18,7 +18,6 @@ const menuItems = [
     { title: "Políticas", url: "/politicas", icon: Shield, roles: ["Administrador"] },
     { title: "Análisis", url: "/analisis", icon: Activity, roles: ["Administrador"] },
     { title: "Reportes", url: "/reportes", icon: FileText, roles: ["Administrador"] },
-    { title: "Planes", url: "/planes", icon: CreditCard, roles: ["Administrador"] },
 ];
 
 export const Sidebar = () => {

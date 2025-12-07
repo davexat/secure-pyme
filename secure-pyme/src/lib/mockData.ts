@@ -10,8 +10,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Seguro",
         version_agente: "1.2.3",
         estado_conexion_agente: "Conectado",
-        ubicacion: "Quito",
-        plan: "Básico"
+        ubicacion: "Quito"
     },
     {
         id: "EQ-002",
@@ -22,8 +21,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Advertencia",
         version_agente: "1.2.1",
         estado_conexion_agente: "En sincronización",
-        ubicacion: "Guayaquil",
-        plan: "Estándar"
+        ubicacion: "Guayaquil"
     },
     {
         id: "EQ-003",
@@ -34,8 +32,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Amenaza",
         version_agente: "1.1.9",
         estado_conexion_agente: "Conectado",
-        ubicacion: "Guayaquil",
-        plan: "Básico"
+        ubicacion: "Guayaquil"
     },
     {
         id: "EQ-004",
@@ -46,8 +43,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Desconectado",
         version_agente: "N/A",
         estado_conexion_agente: "Desconectado",
-        ubicacion: "Cuenca",
-        plan: "Ejecutivo"
+        ubicacion: "Cuenca"
     },
     {
         id: "EQ-005",
@@ -58,8 +54,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Seguro",
         version_agente: "1.2.3",
         estado_conexion_agente: "Conectado",
-        ubicacion: "Quito",
-        plan: "Estándar"
+        ubicacion: "Quito"
     },
     {
         id: "EQ-006",
@@ -70,8 +65,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Advertencia",
         version_agente: "1.2.0",
         estado_conexion_agente: "Conectado",
-        ubicacion: "Milagro",
-        plan: "Básico"
+        ubicacion: "Milagro"
     },
     {
         id: "EQ-007",
@@ -82,8 +76,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Seguro",
         version_agente: "1.2.3",
         estado_conexion_agente: "Conectado",
-        ubicacion: "Guayaquil",
-        plan: "Estándar"
+        ubicacion: "Guayaquil"
     },
     {
         id: "EQ-008",
@@ -94,8 +87,7 @@ export const mockEquipment: Equipment[] = [
         estado_seguridad: "Seguro",
         version_agente: "1.2.3",
         estado_conexion_agente: "Conectado",
-        ubicacion: "Guayaquil",
-        plan: "Ejecutivo"
+        ubicacion: "Guayaquil"
     }
 ];
 

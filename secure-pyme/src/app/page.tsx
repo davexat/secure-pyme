@@ -87,7 +87,7 @@ export default function Dashboard() {
                 <TableHead>Ubicación</TableHead>
                 <TableHead>Estado Seguridad</TableHead>
                 <TableHead>Conexión Agente</TableHead>
-                <TableHead>Plan</TableHead>
+                {/* <TableHead>Plan</TableHead> Removed */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -102,7 +102,7 @@ export default function Dashboard() {
                   <TableCell>
                     <StatusBadge status={equipo.estado_conexion_agente} type="connection" />
                   </TableCell>
-                  <TableCell>{equipo.plan}</TableCell>
+                  {/* <TableCell>{equipo.plan}</TableCell> Removed */}
                 </TableRow>
               ))}
             </TableBody>

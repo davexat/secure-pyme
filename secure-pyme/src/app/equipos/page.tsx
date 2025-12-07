@@ -26,7 +26,7 @@ interface Equipment {
     estado_conexion_agente: string;
     version_agente: string;
     ubicacion: string;
-    plan: string;
+    // plan: string; // Removed
 }
 
 export default function Equipos() {
@@ -49,15 +49,8 @@ export default function Equipos() {
 
     const ubicaciones = Array.from(new Set(mockEquipment.map(e => e.ubicacion)));
 
-    const maxEquiposPorPlan: Record<string, number> = {
-        "Básico": 5,
-        "Estándar": 20,
-        "Ejecutivo": 100
-    };
-
-    const planActual = "Estándar";
     const equiposActuales = mockEquipment.length;
-    const maxEquipos = maxEquiposPorPlan[planActual];
+    // const maxEquipos = maxEquiposPorPlan[planActual]; // Removed limits
 
     const getThreatDetails = (equipo: Equipment) => {
         if (equipo.estado_seguridad === "Amenaza") {
@@ -164,12 +157,11 @@ export default function Equipos() {
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Equipos en el plan</p>
-                        <p className="text-2xl font-bold">{equiposActuales} / {maxEquipos}</p>
+                        <p className="text-sm text-muted-foreground">Total Equipos</p>
+                        <p className="text-2xl font-bold">{equiposActuales}</p>
                     </div>
                     <Button
                         onClick={() => setDialogAgregarAbierto(true)}
-                        disabled={equiposActuales >= maxEquipos}
                     >
                         <Plus className="mr-2 h-4 w-4" />
                         Agregar Equipo
@@ -232,7 +224,7 @@ export default function Equipos() {
                                 <TableHead>Conexión Agente</TableHead>
                                 <TableHead>Versión</TableHead>
                                 <TableHead>Ubicación</TableHead>
-                                <TableHead>Plan</TableHead>
+                                {/* <TableHead>Plan</TableHead> Removed */}
                                 <TableHead>Acciones</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -253,7 +245,7 @@ export default function Equipos() {
                                         <Badge variant="outline">{equipo.version_agente}</Badge>
                                     </TableCell>
                                     <TableCell>{equipo.ubicacion}</TableCell>
-                                    <TableCell>{equipo.plan}</TableCell>
+                                    {/* <TableCell>{equipo.plan}</TableCell> Removed */}
                                     <TableCell>
                                         <Button
                                             variant="ghost"
@@ -303,10 +295,7 @@ export default function Equipos() {
                                     <p className="text-sm font-medium">Versión del Agente</p>
                                     <p className="text-sm text-muted-foreground">{equipoActual.version_agente}</p>
                                 </div>
-                                <div>
-                                    <p className="text-sm font-medium">Plan</p>
-                                    <p className="text-sm text-muted-foreground">{equipoActual.plan}</p>
-                                </div>
+                                {/* Plan details removed */}
                                 <div>
                                     <p className="text-sm font-medium">Estado de Seguridad</p>
                                     <StatusBadge status={equipoActual.estado_seguridad} type="security" />
@@ -440,9 +429,9 @@ export default function Equipos() {
                         </div>
 
                         <div className="bg-muted p-3 rounded-md">
-                            <p className="text-sm font-medium mb-1">Plan Actual: {planActual}</p>
+                            <p className="text-sm font-medium mb-1">Estado del Sistema</p>
                             <p className="text-xs text-muted-foreground">
-                                Equipos disponibles: {maxEquipos - equiposActuales} de {maxEquipos}
+                                Total de equipos gestionados: {equiposActuales}
                             </p>
                         </div>
 

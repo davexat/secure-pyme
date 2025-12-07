@@ -274,7 +274,7 @@ export default function Respaldos() {
                         <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
                             <div>
                                 <p className="font-medium">Checkpoints incrementales</p>
-                                <p className="text-sm text-muted-foreground">Cada 10 minutos (según plan)</p>
+                                <p className="text-sm text-muted-foreground">Cada 10 minutos</p>
                             </div>
                             <Badge className="bg-success/10 text-success">Habilitado</Badge>
                         </div>
