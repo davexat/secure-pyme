@@ -54,7 +54,7 @@ export const Sidebar = () => {
                     <Button
                         variant="outline"
                         size="sm"
-                        className="w-full justify-start bg-transparent border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white"
+                        className={styles.logoutButton}
                     >
                         <LogOut className="h-4 w-4 mr-2" />
                         Cerrar Sesión

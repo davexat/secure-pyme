@@ -198,3 +198,19 @@
     gap: 0.5rem;
     padding-top: 1rem;
 }
+
+.flex1 {
+    flex: 1;
+}
+
+.fontMedium {
+    font-weight: 500;
+}
+
+.mb1 {
+    margin-bottom: 0.25rem;
+}
+
+.textSm {
+    font-size: 0.875rem;
+}

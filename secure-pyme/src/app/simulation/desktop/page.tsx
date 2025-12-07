@@ -12,6 +12,11 @@ export default function DesktopSimulator() {
     const [modalState, setModalState] = useState<'none' | 'blocked' | 'success'>('none');
     const { toast } = useToast();
 
+    // Import cn if not imported, or use inline
+    // I need to import it. But I can't add import easily with multi_replace unless I target top.
+    // I'll assume standard replacement. I'll replace the top import as usual.
+    const cn = (...classes: string[]) => classes.filter(Boolean).join(' ');
+
     const handleInstallClick = async () => {
         setLoading(true);
         try {
@@ -79,11 +84,11 @@ export default function DesktopSimulator() {
             {/* Taskbar */}
             <div className={styles.taskbar}>
                 <div className={styles.startBtn}>
-                    <div className="h-4 w-4 bg-blue-400 grid grid-cols-2 gap-0.5 rounded-sm">
-                        <div className="bg-white/90"></div>
-                        <div className="bg-white/90"></div>
-                        <div className="bg-white/90"></div>
-                        <div className="bg-white/90"></div>
+                    <div className={styles.windowsIcon}>
+                        <div className={styles.windowsIconSquare}></div>
+                        <div className={styles.windowsIconSquare}></div>
+                        <div className={styles.windowsIconSquare}></div>
+                        <div className={styles.windowsIconSquare}></div>
                     </div>
                 </div>
                 <div className={styles.clock}>
@@ -99,16 +104,16 @@ export default function DesktopSimulator() {
                 description="Se ha bloqueado la ejecución de este programa."
                 variant="destructive"
             >
-                <div className="flex flex-col items-center gap-4 py-4">
+                <div className={styles.modalContent}>
                     <ShieldAlert className="h-16 w-16 text-danger" />
-                    <div className="text-center">
-                        <p className="font-bold text-lg text-danger">Acceso Denegado</p>
-                        <p className="text-sm text-muted-foreground mt-2">
+                    <div className={styles.modalText}>
+                        <p className={cn(styles.modalTitle, "text-danger")}>Acceso Denegado</p>
+                        <p className={styles.modalDescription}>
                             La política de seguridad de la organización impide la instalación de software no autorizado.
                             Este incidente ha sido reportado al administrador.
                         </p>
                     </div>
-                    <Button variant="destructive" className="w-full" onClick={closeModal}>
+                    <Button variant="destructive" className={styles.modalButton} onClick={closeModal}>
                         Entendido
                     </Button>
                 </div>
@@ -120,16 +125,16 @@ export default function DesktopSimulator() {
                 title="Instalación Iniciada"
                 variant="success"
             >
-                <div className="flex flex-col items-center gap-4 py-4">
+                <div className={styles.modalContent}>
                     <CheckCircle className="h-16 w-16 text-success" />
-                    <div className="text-center">
-                        <p className="font-bold text-lg text-success">Verificado</p>
-                        <p className="text-sm text-muted-foreground mt-2">
+                    <div className={styles.modalText}>
+                        <p className={cn(styles.modalTitle, "text-success")}>Verificado</p>
+                        <p className={styles.modalDescription}>
                             El instalador ha sido analizado y es seguro.
                             La instalación continuará en breve.
                         </p>
                     </div>
-                    <Button variant="default" className="w-full bg-success hover:bg-success/90" onClick={closeModal}>
+                    <Button variant="default" className={cn(styles.modalButton, styles.successButton)} onClick={closeModal}>
                         Aceptar
                     </Button>
                 </div>

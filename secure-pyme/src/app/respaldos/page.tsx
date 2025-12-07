@@ -12,6 +12,8 @@ import { HardDrive, CheckCircle, Clock, XCircle, Download, File, RefreshCw } fro
 import { Progress } from "@/components/ui/Progress";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { StatCard } from "@/components/ui/StatCard/StatCard";
+import styles from "./page.module.css";
+import { cn } from "@/lib/utils";
 
 interface Backup {
     id: string;
@@ -155,32 +157,34 @@ export default function Respaldos() {
     const getIntegridadBadge = (integridad: string) => {
         switch (integridad) {
             case "Verificado":
-                return <Badge className="bg-success/10 text-success"><CheckCircle className="h-3 w-3 mr-1" />Verificado</Badge>;
+                return <Badge variant="subtleSuccess"><CheckCircle className="h-3 w-3 mr-1" />Verificado</Badge>;
             case "Pendiente":
-                return <Badge className="bg-warning/10 text-warning"><Clock className="h-3 w-3 mr-1" />Pendiente</Badge>;
+                return <Badge variant="subtleWarning"><Clock className="h-3 w-3 mr-1" />Pendiente</Badge>;
             case "Error":
-                return <Badge className="bg-danger/10 text-danger"><XCircle className="h-3 w-3 mr-1" />Error</Badge>;
+                return <Badge variant="subtleDanger"><XCircle className="h-3 w-3 mr-1" />Error</Badge>;
             default:
                 return null;
         }
     };
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold">Gestión de Respaldos</h1>
-                <p className="text-muted-foreground">
-                    Administre copias de seguridad automáticas y restaure información cuando sea necesario
-                </p>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <div>
+                    <h1 className={styles.title}>Gestión de Respaldos</h1>
+                    <p className={styles.subtitle}>
+                        Administre copias de seguridad automáticas y restaure información cuando sea necesario
+                    </p>
+                </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className={styles.statsGrid}>
                 <StatCard
                     title="Respaldos Verificados"
                     value={verificados}
                     description="Integridad confirmada"
                     icon={<CheckCircle />}
-                    iconColor="text-success"
+                    variant="success"
                 />
 
                 <StatCard
@@ -188,7 +192,7 @@ export default function Respaldos() {
                     value={pendientes}
                     description="Proceso en curso"
                     icon={<Clock />}
-                    iconColor="text-warning"
+                    variant="warning"
                 />
 
                 <StatCard
@@ -196,7 +200,7 @@ export default function Respaldos() {
                     value={`${mockBackups.reduce((acc, b) => acc + parseInt(b.tamaño), 0)} GB`}
                     description="Espacio utilizado"
                     icon={<HardDrive />}
-                    iconColor="text-primary"
+                    variant="primary"
                 />
             </div>
 
@@ -253,41 +257,41 @@ export default function Respaldos() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                    <div className={styles.spaceY4}>
+                        <div className={styles.backupItem}>
                             <div>
                                 <p className="font-medium">Frecuencia de respaldo completo</p>
                                 <p className="text-sm text-muted-foreground">Diario a las 02:00 AM</p>
                             </div>
                             <Badge>Activo</Badge>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <div className={styles.backupItem}>
                             <div>
                                 <p className="font-medium">Checkpoints incrementales</p>
                                 <p className="text-sm text-muted-foreground">Cada 10 minutos</p>
                             </div>
-                            <Badge className="bg-success/10 text-success">Habilitado</Badge>
+                            <Badge variant="subtleSuccess">Habilitado</Badge>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <div className={styles.backupItem}>
                             <div>
                                 <p className="font-medium">Retención de datos</p>
                                 <p className="text-sm text-muted-foreground">Mantener últimos 30 respaldos</p>
                             </div>
                             <Badge>Configurado</Badge>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <div className={styles.backupItem}>
                             <div>
                                 <p className="font-medium">Verificación de integridad</p>
                                 <p className="text-sm text-muted-foreground">Automática después de cada respaldo</p>
                             </div>
-                            <Badge className="bg-success/10 text-success">Habilitado</Badge>
+                            <Badge variant="subtleSuccess">Habilitado</Badge>
                         </div>
                     </div>
                 </CardContent>
             </Card>
 
             <Dialog open={dialogAbierto} onOpenChange={setDialogAbierto}>
-                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                <DialogContent className={styles.dialogContent}>
                     <DialogHeader>
                         <DialogTitle>Restaurar Respaldo - {respaldoSeleccionado?.equipo_nombre}</DialogTitle>
                         <DialogDescription>
@@ -296,7 +300,7 @@ export default function Respaldos() {
                     </DialogHeader>
 
                     {respaldoSeleccionado && (
-                        <div className="space-y-4">
+                        <div className={styles.spaceY4}>
                             {!restaurando ? (
                                 <>
                                     <div>
@@ -361,7 +365,7 @@ export default function Respaldos() {
                                         </p>
                                     </div>
 
-                                    <div className="flex gap-2">
+                                    <div className={styles.restoreActions}>
                                         <Button
                                             onClick={ejecutarRestauracion}
                                             className="flex-1"

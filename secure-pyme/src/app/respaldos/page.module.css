@@ -1,0 +1,156 @@
+.container {
+    padding: 1.5rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: hsl(var(--muted-foreground));
+}
+
+.statsGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.dialogContent {
+    max-width: 48rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.spaceY4> :not([hidden])~ :not([hidden]) {
+    margin-top: 1rem;
+}
+
+.versionList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.restoreActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.5rem;
+}
+
+.actionButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mainGrid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .mainGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.leftColumn {
+    grid-column: span 1 / span 1;
+}
+
+@media (min-width: 768px) {
+    .leftColumn {
+        grid-column: span 2 / span 2;
+    }
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cardHeader {
+    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: 1rem;
+}
+
+.cardTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.backupItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    background-color: hsl(var(--muted));
+    margin-bottom: 0.5rem;
+}
+
+.backupInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.backupText {
+    font-weight: 500;
+}
+
+.backupSubtext {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.statusSuccess {
+    color: hsl(var(--success));
+}
+
+.statusWarning {
+    color: hsl(var(--warning));
+}
+
+.statusDanger {
+    color: hsl(var(--danger));
+}
+
+.progressBarContainer {
+    height: 0.5rem;
+    width: 100%;
+    background-color: hsl(var(--secondary));
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background-color: hsl(var(--primary));
+    transition: width 0.5s ease-in-out;
+}

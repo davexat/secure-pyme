@@ -7,6 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Download, FileText, TrendingUp, AlertTriangle, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { mockEquipment, mockAlerts, mockIncidents } from "@/lib/mockData";
+import styles from "./page.module.css";
+import { cn } from "@/lib/utils";
 
 export default function Reportes() {
     const { toast } = useToast();
@@ -54,11 +56,11 @@ export default function Reportes() {
     const alertasActivas = mockAlerts.filter(a => a.estado === "Activa").length;
 
     return (
-        <div className="space-y-6">
+        <div className={styles.container}>
             <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold">Reportes Ejecutivos</h1>
-                    <p className="text-muted-foreground">
+                <div className={styles.header}>
+                    <h1 className={styles.title}>Reportes Ejecutivos</h1>
+                    <p className={styles.subtitle}>
                         Resúmenes y análisis para toma de decisiones estratégicas
                     </p>
                 </div>
@@ -74,12 +76,12 @@ export default function Reportes() {
                     <CardDescription>Noviembre 2025 • Vista general de seguridad</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-4 md:grid-cols-4">
+                    <div className={styles.reportGrid}>
                         <div className="space-y-2">
                             <p className="text-sm font-medium text-muted-foreground">Equipos Seguros</p>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-2xl font-bold">{seguros}</p>
-                                <Badge className="bg-success/10 text-success">
+                                <Badge variant="subtleSuccess">
                                     <TrendingUp className="h-3 w-3 mr-1" />
                                     62.5%
                                 </Badge>
@@ -89,28 +91,28 @@ export default function Reportes() {
                             <p className="text-sm font-medium text-muted-foreground">En Riesgo</p>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-2xl font-bold">{enRiesgo}</p>
-                                <Badge className="bg-warning/10 text-warning">25%</Badge>
+                                <Badge variant="subtleWarning">25%</Badge>
                             </div>
                         </div>
                         <div className="space-y-2">
                             <p className="text-sm font-medium text-muted-foreground">Amenazas</p>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-2xl font-bold">{amenazados}</p>
-                                <Badge className="bg-danger/10 text-danger">12.5%</Badge>
+                                <Badge variant="subtleDanger">12.5%</Badge>
                             </div>
                         </div>
                         <div className="space-y-2">
                             <p className="text-sm font-medium text-muted-foreground">Incidentes Resueltos</p>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-2xl font-bold">{incidentesResueltos}</p>
-                                <Badge className="bg-primary/10 text-primary">60%</Badge>
+                                <Badge variant="subtlePrimary">60%</Badge>
                             </div>
                         </div>
                     </div>
                 </CardContent>
             </Card>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className={styles.reportGrid}>
                 <Card>
                     <CardHeader>
                         <CardTitle>Nivel de Riesgo General</CardTitle>
@@ -120,7 +122,7 @@ export default function Reportes() {
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-medium">Riesgo Actual</span>
-                                <Badge className="bg-warning/10 text-warning">MEDIO</Badge>
+                                <Badge variant="subtleWarning">MEDIO</Badge>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
@@ -151,14 +153,14 @@ export default function Reportes() {
                                     <p className="font-medium">PC-Ventas-1</p>
                                     <p className="text-xs text-muted-foreground">Amenaza de ransomware detectada</p>
                                 </div>
-                                <Badge className="bg-danger text-danger-foreground">Crítico</Badge>
+                                <Badge variant="danger">Crítico</Badge>
                             </div>
                             <div className="flex items-center justify-between p-3 bg-warning/10 rounded">
                                 <div>
                                     <p className="font-medium">SERV-FACT</p>
                                     <p className="text-xs text-muted-foreground">Agente desactualizado</p>
                                 </div>
-                                <Badge className="bg-warning text-warning-foreground">Advertencia</Badge>
+                                <Badge variant="warning">Advertencia</Badge>
                             </div>
                             <div className="flex items-center justify-between p-3 bg-muted rounded">
                                 <div>
@@ -178,7 +180,7 @@ export default function Reportes() {
                     <CardDescription>Indicadores clave del mes</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-6 md:grid-cols-3">
+                    <div className={styles.reportGrid}>
                         <div>
                             <div className="flex items-center gap-2 mb-2">
                                 <Shield className="h-5 w-5 text-success" />
@@ -219,7 +221,7 @@ export default function Reportes() {
                     <CardDescription>Acciones prioritarias para mejorar la seguridad</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ol className="space-y-3 list-decimal list-inside">
+                    <ol className={styles.recommendationsList}>
                         <li className="text-sm">
                             <strong>Acción Inmediata:</strong> Aislar y restaurar PC-Ventas-1 debido a la detección de ransomware.
                             Impacto estimado en operaciones: 2-4 horas.
@@ -244,10 +246,10 @@ export default function Reportes() {
                 </CardContent>
             </Card>
 
-            <Card className="bg-primary/5">
-                <CardContent className="pt-6">
-                    <div className="flex items-start gap-4">
-                        <div className="rounded-full p-3 bg-primary/10">
+            <Card className={styles.promoCard}>
+                <CardContent className={styles.promoContent}>
+                    <div className={styles.promoFlex}>
+                        <div className={styles.promoIconWrapper}>
                             <FileText className="h-6 w-6 text-primary" />
                         </div>
                         <div className="flex-1">

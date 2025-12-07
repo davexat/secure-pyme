@@ -1,0 +1,90 @@
+.container {
+    padding: 1.5rem;
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: hsl(var(--muted-foreground));
+}
+
+.statsGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.policyList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.policyItem {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+}
+
+.policyInfoWrapper {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.policyTitleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.policyTitle {
+    font-weight: 500;
+}
+
+.policyDescription {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.recommendationList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.recommendationItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.checkIcon {
+    height: 1rem;
+    width: 1rem;
+    color: hsl(var(--success));
+    margin-top: 0.125rem;
+}
+
+.bgPrimary5 {
+    background-color: hsl(var(--primary) / 0.05);
+}

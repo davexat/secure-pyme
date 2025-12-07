@@ -6,6 +6,8 @@ import { Activity, AlertTriangle, TrendingUp, Globe } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from "recharts";
 import { StatCard } from "@/components/ui/StatCard/StatCard";
+import styles from "./page.module.css";
+import { cn } from "@/lib/utils";
 
 const datosConexiones = [
     { hora: "00:00", conexiones: 45, sospechosas: 2 },
@@ -53,21 +55,21 @@ export default function Analisis() {
     const picosTrafic = 2;
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold">Análisis de Conectividad</h1>
-                <p className="text-muted-foreground">
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Análisis de Conectividad</h1>
+                <p className={styles.subtitle}>
                     Monitoreo de conexiones de red y detección de comportamiento anómalo
                 </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className={styles.statsGrid}>
                 <StatCard
                     title="Conexiones Activas"
                     value={conexionesActivas}
                     description="En este momento"
                     icon={<Activity />}
-                    iconColor="text-primary"
+                    variant="primary"
                 />
 
                 <StatCard
@@ -75,7 +77,7 @@ export default function Analisis() {
                     value={conexionesSospechosas}
                     description="Requieren revisión"
                     icon={<AlertTriangle />}
-                    iconColor="text-warning"
+                    variant="warning"
                 />
 
                 <StatCard
@@ -83,7 +85,7 @@ export default function Analisis() {
                     value={picosTrafic}
                     description="Últimas 24 horas"
                     icon={<TrendingUp />}
-                    iconColor="text-success"
+                    variant="success"
                 />
             </div>
 
@@ -176,13 +178,13 @@ export default function Analisis() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-4">
-                        <div className="flex items-start justify-between p-4 border rounded-lg border-warning">
+                    <div className={styles.incidentList}>
+                        <div className={cn(styles.incidentItem, "border border-warning")}>
                             <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
+                                <div className={styles.incidentInfo}>
                                     <Globe className="h-4 w-4 text-warning" />
                                     <span className="font-medium">Conexión a IP sospechosa</span>
-                                    <Badge className="bg-warning/10 text-warning">Media</Badge>
+                                    <Badge variant="subtleWarning">Media</Badge>
                                 </div>
                                 <p className="text-sm mb-2">
                                     El equipo PC-Ventas-1 intentó conectarse a 185.220.101.45, una IP asociada con actividad maliciosa conocida.
@@ -195,12 +197,12 @@ export default function Analisis() {
                             </div>
                         </div>
 
-                        <div className="flex items-start justify-between p-4 border rounded-lg border-warning">
+                        <div className={cn(styles.incidentItem, "border border-warning")}>
                             <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
+                                <div className={styles.incidentInfo}>
                                     <Globe className="h-4 w-4 text-warning" />
                                     <span className="font-medium">Dominio no confiable</span>
-                                    <Badge className="bg-warning/10 text-warning">Media</Badge>
+                                    <Badge variant="subtleWarning">Media</Badge>
                                 </div>
                                 <p className="text-sm mb-2">
                                     SERV-FACT intentó acceder a un dominio recientemente registrado sin historial de confianza.
@@ -213,12 +215,12 @@ export default function Analisis() {
                             </div>
                         </div>
 
-                        <div className="flex items-start justify-between p-4 border rounded-lg border-primary">
+                        <div className={cn(styles.incidentItem, "border border-primary")}>
                             <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
+                                <div className={styles.incidentInfo}>
                                     <TrendingUp className="h-4 w-4 text-primary" />
                                     <span className="font-medium">Pico de tráfico inusual</span>
-                                    <Badge className="bg-primary/10 text-primary">Baja</Badge>
+                                    <Badge variant="subtlePrimary">Baja</Badge>
                                 </div>
                                 <p className="text-sm mb-2">
                                     DB-Clientes registró un aumento del 340% en tráfico saliente entre las 03:00 y 04:00 AM.
@@ -240,20 +242,20 @@ export default function Analisis() {
                     <CardDescription>Acciones sugeridas basadas en el análisis</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ul className="space-y-2 text-sm">
-                        <li className="flex items-start gap-2">
+                    <ul className={styles.recommendationList}>
+                        <li className={styles.recommendationItem}>
                             <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
                             <span>
                                 <strong>PC-Ventas-1:</strong> Ejecutar análisis completo de malware y revisar procesos en ejecución
                             </span>
                         </li>
-                        <li className="flex items-start gap-2">
+                        <li className={styles.recommendationItem}>
                             <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
                             <span>
                                 <strong>SERV-FACT:</strong> Mantener bloqueado el acceso al dominio sospechoso y monitorear intentos futuros
                             </span>
                         </li>
-                        <li className="flex items-start gap-2">
+                        <li className={styles.recommendationItem}>
                             <Activity className="h-4 w-4 text-primary mt-0.5" />
                             <span>
                                 <strong>DB-Clientes:</strong> Verificar respaldos programados que podrían explicar el pico de tráfico nocturno

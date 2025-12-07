@@ -1,14 +1,13 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card/Card";
-import { cn } from "@/lib/utils";
+import styles from './StatCard.module.css';
 
 interface StatCardProps {
     title: string;
     value: string | number;
     description: string;
     icon: React.ReactNode;
-    iconColor?: string;
-    borderColor?: 'success' | 'warning' | 'danger' | 'primary';
+    variant?: 'success' | 'warning' | 'danger' | 'primary';
     className?: string;
 }
 
@@ -17,22 +16,24 @@ export function StatCard({
     value,
     description,
     icon,
-    iconColor,
-    borderColor,
+    variant,
     className
 }: StatCardProps) {
+    const variantClass = variant ? styles[`border${variant.charAt(0).toUpperCase() + variant.slice(1)}`] : '';
+    const iconClass = variant ? styles[`text${variant.charAt(0).toUpperCase() + variant.slice(1)}`] : styles.iconDefault;
+
     return (
-        <Card className={cn(borderColor && `stat-card-border-${borderColor}`, className)}>
-            <CardHeader className="stat-card-header">
-                <CardTitle className="stat-card-title">{title}</CardTitle>
-                <div className={cn("h-4 w-4", iconColor)}>
+        <Card className={`${styles.card} ${variantClass} ${className || ''}`}>
+            <div className={styles.header}>
+                <h3 className={styles.title}>{title}</h3>
+                <div className={`${styles.icon} ${iconClass}`}>
                     {icon}
                 </div>
-            </CardHeader>
-            <CardContent>
-                <div className="stat-card-value">{value}</div>
-                <p className="stat-card-label">{description}</p>
-            </CardContent>
+            </div>
+            <div className={styles.content}>
+                <div className={styles.value}>{value}</div>
+                <p className={styles.label}>{description}</p>
+            </div>
         </Card>
     );
 }

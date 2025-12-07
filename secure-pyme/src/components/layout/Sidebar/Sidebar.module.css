@@ -95,3 +95,17 @@
     font-size: 0.75rem;
     color: hsl(var(--muted-foreground));
 }
+
+.logoutButton {
+    width: 100%;
+    justify-content: flex-start;
+    background-color: transparent;
+    border-color: hsl(var(--sidebar-border));
+    color: hsl(var(--sidebar-foreground));
+    margin-top: 0.5rem;
+}
+
+.logoutButton:hover {
+    background-color: hsl(var(--sidebar-accent));
+    color: hsl(var(--sidebar-accent-foreground));
+}

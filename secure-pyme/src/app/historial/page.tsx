@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table";
 import { CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { StatCard } from "@/components/ui/StatCard/StatCard";
+import styles from "./page.module.css";
+import { cn } from "@/lib/utils";
 
 // Types extracted locally
 interface Incident {
@@ -49,16 +51,16 @@ export default function Historial() {
         }
     };
 
-    const getStatusColor = (estado: string) => {
+    const getStatusColor = (estado: string): any => {
         switch (estado) {
             case "Resuelto":
-                return "bg-success/10 text-success";
+                return "subtleSuccess";
             case "Mitigado":
-                return "bg-warning/10 text-warning";
+                return "subtleWarning";
             case "En investigación":
-                return "bg-primary/10 text-primary";
+                return "subtlePrimary";
             default:
-                return "bg-muted text-muted-foreground";
+                return "secondary";
         }
     };
 
@@ -67,21 +69,21 @@ export default function Historial() {
     const enInvestigacion = mockIncidents.filter(i => i.estado === "En investigación").length;
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold">Historial de Incidentes</h1>
-                <p className="text-muted-foreground">
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Historial de Incidentes</h1>
+                <p className={styles.subtitle}>
                     Registro completo de eventos de seguridad y acciones tomadas
                 </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className={styles.statsGrid}>
                 <StatCard
                     title="Resueltos"
                     value={resueltos}
                     description="Completamente solucionados"
                     icon={<CheckCircle2 />}
-                    iconColor="text-success"
+                    variant="success"
                 />
 
                 <StatCard
@@ -89,7 +91,7 @@ export default function Historial() {
                     value={mitigados}
                     description="Riesgo reducido"
                     icon={<AlertCircle />}
-                    iconColor="text-warning"
+                    variant="warning"
                 />
 
                 <StatCard
@@ -97,7 +99,7 @@ export default function Historial() {
                     value={enInvestigacion}
                     description="Análisis en curso"
                     icon={<Clock />}
-                    iconColor="text-primary"
+                    variant="primary"
                 />
             </div>
 
@@ -106,8 +108,8 @@ export default function Historial() {
                     <CardTitle>Filtros</CardTitle>
                     <CardDescription>Filtre incidentes por estado y período de tiempo</CardDescription>
                 </CardHeader>
-                <CardContent className="flex gap-4">
-                    <div className="flex-1">
+                <CardContent className={styles.filters}>
+                    <div className={styles.filterSelect}>
                         <Select value={filtroEstado} onValueChange={setFiltroEstado}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Estado del incidente" />
@@ -120,7 +122,7 @@ export default function Historial() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex-1">
+                    <div className={styles.filterSelect}>
                         <Select value={filtroPeriodo} onValueChange={setFiltroPeriodo}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Período" />
@@ -169,7 +171,7 @@ export default function Historial() {
                                     <TableCell>
                                         <div className="flex items-center gap-2">
                                             {getStatusIcon(incidente.estado)}
-                                            <Badge className={getStatusColor(incidente.estado)}>
+                                            <Badge variant={getStatusColor(incidente.estado)}>
                                                 {incidente.estado}
                                             </Badge>
                                         </div>
@@ -194,19 +196,19 @@ export default function Historial() {
                     <CardDescription>Vista cronológica de los incidentes recientes</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-4">
+                    <div className={styles.timelineList}>
                         {incidentesFiltrados.map((incidente, index) => (
-                            <div key={incidente.id} className="flex gap-4">
-                                <div className="flex flex-col items-center">
-                                    <div className="rounded-full p-2 bg-primary/10">
+                            <div key={incidente.id} className={styles.timelineItem}>
+                                <div className={styles.timelineMarkerColumn}>
+                                    <div className={styles.markerIcon}>
                                         {getStatusIcon(incidente.estado)}
                                     </div>
                                     {index < incidentesFiltrados.length - 1 && (
-                                        <div className="w-px h-full bg-border mt-2" />
+                                        <div className={styles.timelineLine} />
                                     )}
                                 </div>
-                                <div className="flex-1 pb-8">
-                                    <div className="flex items-start justify-between mb-2">
+                                <div className={styles.timelineContent}>
+                                    <div className={styles.timelineHeader}>
                                         <div>
                                             <p className="font-medium">{incidente.equipo_nombre}</p>
                                             <p className="text-sm text-muted-foreground">{incidente.tipo}</p>
@@ -216,8 +218,8 @@ export default function Historial() {
                                         </span>
                                     </div>
                                     <p className="text-sm mb-2">{incidente.descripcion}</p>
-                                    <div className="flex items-center gap-2">
-                                        <Badge className={getStatusColor(incidente.estado)}>
+                                    <div className={styles.actionsWrapper}>
+                                        <Badge variant={getStatusColor(incidente.estado)}>
                                             {incidente.estado}
                                         </Badge>
                                         <span className="text-xs text-muted-foreground">

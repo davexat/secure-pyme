@@ -1,0 +1,170 @@
+.container {
+    padding: 1.5rem;
+    /* p-6 */
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: hsl(var(--muted-foreground));
+}
+
+.statsGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .statsGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.contentGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .contentGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.chartContainer {
+    height: 16rem;
+    /* h-64 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: hsl(var(--muted) / 0.3);
+    border-radius: var(--radius);
+}
+
+.chartPlaceholder {
+    color: hsl(var(--muted-foreground));
+}
+
+.incidentList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.incidentItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: hsl(var(--muted) / 0.5);
+    border-radius: var(--radius);
+}
+
+.incidentInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.incidentText {
+    font-weight: 500;
+}
+
+.incidentSubtext {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.riskHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.riskTitle {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.riskGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.riskItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.riskLabel {
+    color: hsl(var(--muted-foreground));
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.riskValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.riskValueHigh {
+    color: hsl(var(--danger));
+}
+
+.riskValueMedium {
+    color: hsl(var(--warning));
+}
+
+.riskValueLow {
+    color: hsl(var(--success));
+}
+
+.securityScore {
+    margin-top: 2rem;
+    text-align: center;
+    padding: 2rem;
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+}
+
+.scoreTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.scoreValue {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: hsl(var(--primary));
+    margin-bottom: 0.5rem;
+}
+
+.scoreLabel {
+    color: hsl(var(--muted-foreground));
+}

@@ -12,6 +12,7 @@ import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 import { Alert } from "@/types";
 import styles from "./page.module.css";
+import { cn } from "@/lib/utils";
 
 export default function Alertas() {
     const [alertas, setAlertas] = useState<Alert[]>(mockAlerts);
@@ -60,7 +61,7 @@ export default function Alertas() {
                     value={alertasActivas.length}
                     description="Requieren atención"
                     icon={<AlertTriangle />}
-                    iconColor="text-danger"
+                    variant="danger"
                 />
 
                 <StatCard
@@ -68,7 +69,7 @@ export default function Alertas() {
                     value={alertasResueltas.length}
                     description="En las últimas 24h"
                     icon={<CheckCircle />}
-                    iconColor="text-success"
+                    variant="success"
                 />
 
                 <StatCard
@@ -76,7 +77,7 @@ export default function Alertas() {
                     value={alertasActivas.filter(a => a.nivel === "Alta").length}
                     description="Prioridad alta"
                     icon={<AlertTriangle />}
-                    iconColor="text-danger"
+                    variant="danger"
                 />
             </div>
 
@@ -97,7 +98,7 @@ export default function Alertas() {
                         alertasActivas.map((alerta) => (
                             <div key={alerta.id} className={styles.alertItem}>
                                 <div className={styles.alertHeader}>
-                                    <div className="flex-1">
+                                    <div className={styles.flex1}>
                                         <div className={styles.alertMeta}>
                                             <StatusBadge status={alerta.nivel} type="alert" />
                                             <span className={styles.alertTeam}>{alerta.equipo_nombre}</span>
@@ -155,7 +156,7 @@ export default function Alertas() {
                                 <div>
                                     <div className={styles.resolvedMeta}>
                                         <CheckCircle className="h-4 w-4 text-success" />
-                                        <span className="font-medium">{alerta.equipo_nombre}</span>
+                                        <span className={styles.fontMedium}>{alerta.equipo_nombre}</span>
                                         <StatusBadge status={alerta.nivel} type="alert" />
                                     </div>
                                     <p className={styles.resolvedDesc}>{alerta.descripcion}</p>
@@ -183,7 +184,7 @@ export default function Alertas() {
                             <div className={styles.dialogMeta}>
                                 <div className={styles.dialogHeaderRow}>
                                     <StatusBadge status={alertaSeleccionada.nivel} type="alert" />
-                                    <span className="font-medium">{alertaSeleccionada.equipo_nombre}</span>
+                                    <span className={styles.fontMedium}>{alertaSeleccionada.equipo_nombre}</span>
                                 </div>
                                 <p className={styles.alertDate}>
                                     {new Date(alertaSeleccionada.fecha).toLocaleString('es-ES')}
@@ -191,19 +192,19 @@ export default function Alertas() {
                             </div>
 
                             <div>
-                                <p className="font-medium mb-1">Descripción:</p>
-                                <p className="text-sm">{alertaSeleccionada.descripcion}</p>
+                                <p className={cn(styles.fontMedium, styles.mb1)}>Descripción:</p>
+                                <p className={styles.textSm}>{alertaSeleccionada.descripcion}</p>
                             </div>
 
                             <div className={styles.dialogRec}>
-                                <p className="font-medium mb-1">Siguiente paso recomendado:</p>
-                                <p className="text-sm">{alertaSeleccionada.recomendacion}</p>
+                                <p className={cn(styles.fontMedium, styles.mb1)}>Siguiente paso recomendado:</p>
+                                <p className={styles.textSm}>{alertaSeleccionada.recomendacion}</p>
                             </div>
 
                             <div className={styles.dialogFooter}>
                                 <Button
                                     onClick={() => marcarComoResuelta(alertaSeleccionada.id)}
-                                    className="flex-1"
+                                    className={styles.flex1}
                                 >
                                     <CheckCircle className="h-4 w-4 mr-2" />
                                     Marcar como Resuelta
@@ -211,7 +212,7 @@ export default function Alertas() {
                                 <Button
                                     variant="outline"
                                     onClick={() => solicitarAyuda(alertaSeleccionada)}
-                                    className="flex-1"
+                                    className={styles.flex1}
                                 >
                                     <HelpCircle className="h-4 w-4 mr-2" />
                                     Solicitar Ayuda

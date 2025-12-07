@@ -369,10 +369,10 @@ export default function Equipos() {
 
                                 <div>
                                     <h4 className="font-semibold mb-2">Detalles Detectados:</h4>
-                                    <ul className="space-y-1">
+                                    <ul className={styles.threatList}>
                                         {getThreatDetails(equipoActual)?.details.map((detail, idx) => (
-                                            <li key={idx} className="text-sm flex items-start gap-2">
-                                                <span className="text-danger mt-1">•</span>
+                                            <li key={idx} className={styles.threatItem}>
+                                                <span className={styles.threatBullet}>•</span>
                                                 <span>{detail}</span>
                                             </li>
                                         ))}
@@ -381,21 +381,21 @@ export default function Equipos() {
 
                                 <div>
                                     <h4 className="font-semibold mb-2">Acciones Recomendadas:</h4>
-                                    <ol className="space-y-1">
+                                    <ol className={styles.actionList}>
                                         {getThreatDetails(equipoActual)?.actions.map((action, idx) => (
-                                            <li key={idx} className="text-sm flex items-start gap-2">
-                                                <span className="font-medium">{idx + 1}.</span>
+                                            <li key={idx} className={styles.actionItem}>
+                                                <span className={styles.actionIndex}>{idx + 1}.</span>
                                                 <span>{action}</span>
                                             </li>
                                         ))}
                                     </ol>
                                 </div>
 
-                                <div className="flex gap-2 pt-4 border-t">
-                                    <Button variant="destructive" className="flex-1">
+                                <div className={styles.dialogFooter}>
+                                    <Button variant="destructive" className={styles.fullWidthButton}>
                                         Aislar Equipo
                                     </Button>
-                                    <Button variant="default" className="flex-1">
+                                    <Button variant="default" className={styles.fullWidthButton}>
                                         Ir a Respaldos
                                     </Button>
                                 </div>
@@ -424,12 +424,12 @@ export default function Equipos() {
                                 value={claveAgente}
                                 onChange={(e) => setClaveAgente(e.target.value)}
                             />
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className={styles.inputHelpText}>
                                 La clave se genera automáticamente al instalar el agente en el dispositivo
                             </p>
                         </div>
 
-                        <div className="bg-muted p-3 rounded-md">
+                        <div className={styles.systemStatusCard}>
                             <p className="text-sm font-medium mb-1">Estado del Sistema</p>
                             <p className="text-xs text-muted-foreground">
                                 Total de equipos gestionados: {equiposActuales}
@@ -437,7 +437,7 @@ export default function Equipos() {
                         </div>
 
                         <div className="flex gap-2">
-                            <Button onClick={agregarDispositivo} className="flex-1">
+                            <Button onClick={agregarDispositivo} className={styles.fullWidthButton}>
                                 Conectar Dispositivo
                             </Button>
                             <Button variant="outline" onClick={() => setDialogAgregarAbierto(false)}>

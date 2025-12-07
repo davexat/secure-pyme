@@ -9,6 +9,8 @@ import { useToast } from "@/components/ui/Toast/Toast";
 import { Shield, CheckCircle } from "lucide-react";
 import { mockPolicies } from "@/lib/mockData";
 import { StatCard } from "@/components/ui/StatCard/StatCard";
+import styles from "./page.module.css";
+import { cn } from "@/lib/utils";
 
 export default function Politicas() {
     // Initialize with all disabled as requested until fetched
@@ -96,21 +98,21 @@ export default function Politicas() {
     const habilitadas = politicas.filter(p => p.habilitada).length;
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold">Políticas de Seguridad</h1>
-                <p className="text-muted-foreground">
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Políticas de Seguridad</h1>
+                <p className={styles.subtitle}>
                     Configure reglas de protección que se aplicarán automáticamente a todos los equipos
                 </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className={styles.statsGrid}>
                 <StatCard
                     title="Políticas Activas"
                     value={habilitadas}
                     description={`de ${politicas.length} políticas disponibles`}
                     icon={<Shield />}
-                    iconColor="text-success"
+                    variant="success"
                 />
 
                 <StatCard
@@ -118,7 +120,7 @@ export default function Politicas() {
                     value={8}
                     description="Todas las políticas se aplican automáticamente"
                     icon={<CheckCircle />}
-                    iconColor="text-primary"
+                    variant="primary"
                 />
             </div>
 
@@ -129,22 +131,22 @@ export default function Politicas() {
                         Active o desactive políticas de seguridad según las necesidades de su empresa
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className={styles.policyList}>
                     {politicas.map((politica) => (
                         <div
                             key={politica.id}
-                            className="flex items-start justify-between p-4 border rounded-lg"
+                            className={styles.policyItem}
                         >
-                            <div className="flex-1 mr-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <p className="font-medium">{politica.nombre}</p>
+                            <div className={styles.policyInfoWrapper}>
+                                <div className={styles.policyTitleWrapper}>
+                                    <p className={styles.policyTitle}>{politica.nombre}</p>
                                     {politica.habilitada ? (
-                                        <Badge className="bg-success text-success-foreground">Activa</Badge>
+                                        <Badge variant="success">Activa</Badge>
                                     ) : (
                                         <Badge variant="secondary">Inactiva</Badge>
                                     )}
                                 </div>
-                                <p className="text-sm text-muted-foreground">{politica.descripcion}</p>
+                                <p className={styles.policyDescription}>{politica.descripcion}</p>
                             </div>
                             <Switch
                                 checked={politica.habilitada}
@@ -157,22 +159,23 @@ export default function Politicas() {
             </Card>
 
             {/* Keeping Recommendations Card for parity */}
-            <Card className="bg-primary/5">
+            {/* Keeping Recommendations Card for parity */}
+            <Card className={styles.bgPrimary5}>
                 <CardHeader>
                     <CardTitle>Recomendaciones de Seguridad</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <ul className="space-y-2 text-sm">
-                        <li className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                    <ul className={styles.recommendationList}>
+                        <li className={styles.recommendationItem}>
+                            <CheckCircle className={styles.checkIcon} />
                             <span>Mantenga activas al menos 3 políticas de seguridad básicas</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                        <li className={styles.recommendationItem}>
+                            <CheckCircle className={styles.checkIcon} />
                             <span>Revise y actualice las políticas mensualmente según las necesidades del negocio</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                        <li className={styles.recommendationItem}>
+                            <CheckCircle className={styles.checkIcon} />
                             <span>Documente los cambios de políticas para auditorías futuras</span>
                         </li>
                     </ul>

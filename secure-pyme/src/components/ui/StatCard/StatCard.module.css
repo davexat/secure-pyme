@@ -1,40 +1,55 @@
-.cardHeader {
+.card {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    padding: 1.5rem;
+}
+
+.header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 0.5rem;
     margin-top: 0;
-    /* Ensure no vertical spacing between children */
     gap: 0;
 }
 
-.cardHeader>*+* {
-    margin-top: 0 !important;
-}
-
-.cardTitle {
+.title {
     font-size: 0.875rem;
-    /* sm */
     font-weight: 500;
     margin: 0;
+    letter-spacing: -0.025em;
+    color: hsl(var(--foreground));
 }
 
-.cardValue {
+.content {
+    margin-top: 0;
+}
+
+.value {
     font-size: 1.5rem;
-    /* 2xl */
     font-weight: 700;
-    line-height: 2rem;
+    line-height: 1;
+    color: hsl(var(--foreground));
 }
 
-.cardLabel {
+.label {
     font-size: 0.75rem;
-    /* xs */
     color: hsl(var(--muted-foreground));
-    margin: 0;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
 }
 
-/* Border color variants for dashboard */
+.icon {
+    height: 1rem;
+    width: 1rem;
+    color: hsl(var(--muted-foreground));
+}
+
+/* Border variants */
 .borderSuccess {
     border-left: 4px solid hsl(var(--success));
 }

@@ -35,8 +35,7 @@ export default function Dashboard() {
           value={`${porcentajeSeguro}%`}
           description={`${seguros} de ${mockEquipment.length} equipos`}
           icon={<Shield />}
-          iconColor="text-success"
-          borderColor="success"
+          variant="success"
         />
 
         <StatCard
@@ -44,8 +43,7 @@ export default function Dashboard() {
           value={`${porcentajeRiesgo}%`}
           description={`${enRiesgo} equipos requieren atención`}
           icon={<AlertTriangle />}
-          iconColor="text-warning"
-          borderColor="warning"
+          variant="warning"
         />
 
         <StatCard
@@ -53,8 +51,7 @@ export default function Dashboard() {
           value={amenazados}
           description="Requieren acción inmediata"
           icon={<Activity />}
-          iconColor="text-danger"
-          borderColor="danger"
+          variant="danger"
         />
 
         <StatCard
@@ -62,8 +59,7 @@ export default function Dashboard() {
           value={alertasActivas}
           description="Notificaciones pendientes"
           icon={<HardDrive />}
-          iconColor="text-primary"
-          borderColor="primary"
+          variant="primary"
         />
       </div>
 

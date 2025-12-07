@@ -1,9 +1,8 @@
 "use client";
 
 import { SecurityStatus, AlertLevel, AgentConnectionStatus } from "@/types";
-import { Badge } from "@/components/ui/Badge/Badge";
+import { Badge, BadgeProps } from "@/components/ui/Badge/Badge";
 import { Shield, AlertTriangle, XCircle, Wifi, WifiOff, Loader2 } from "lucide-react";
-import styles from "./StatusBadge.module.css";
 import { cn } from "@/lib/utils";
 
 interface StatusBadgeProps {
@@ -13,53 +12,53 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ status, type }: StatusBadgeProps) {
     if (type === "security") {
-        const securityConfig: Record<string, { className: string, icon: any }> = {
-            "Seguro": { className: styles.securitySeguro, icon: Shield },
-            "Advertencia": { className: styles.securityAdvertencia, icon: AlertTriangle },
-            "Amenaza": { className: styles.securityAmenaza, icon: XCircle },
-            "Desconectado": { className: styles.securityDesconectado, icon: WifiOff }
+        const securityConfig: Record<string, { variant: BadgeProps['variant'], icon: any }> = {
+            "Seguro": { variant: "success", icon: Shield },
+            "Advertencia": { variant: "warning", icon: AlertTriangle },
+            "Amenaza": { variant: "danger", icon: XCircle },
+            "Desconectado": { variant: "secondary", icon: WifiOff }
         };
 
-        const config = securityConfig[status as string] || { className: "", icon: WifiOff };
+        const config = securityConfig[status as string] || { variant: "secondary", icon: WifiOff };
         const Icon = config.icon;
 
         return (
-            <Badge className={config.className}>
-                <Icon className={styles.icon} />
+            <Badge variant={config.variant}>
+                <Icon className="h-4 w-4" />
                 {status}
             </Badge>
         );
     }
 
     if (type === "alert") {
-        const alertConfig: Record<string, { className: string }> = {
-            "Baja": { className: styles.alertBaja },
-            "Media": { className: styles.alertMedia },
-            "Alta": { className: styles.alertAlta }
+        const alertConfig: Record<string, { variant: BadgeProps['variant'] }> = {
+            "Baja": { variant: "success" },
+            "Media": { variant: "warning" },
+            "Alta": { variant: "danger" }
         };
 
-        const config = alertConfig[status as string] || { className: "" };
+        const config = alertConfig[status as string] || { variant: "default" };
 
         return (
-            <Badge className={config.className}>
+            <Badge variant={config.variant}>
                 {status}
             </Badge>
         );
     }
 
     if (type === "connection") {
-        const connectionConfig: Record<string, { className: string, icon: any, iconClassName?: string }> = {
-            "Conectado": { className: styles.connectionConectado, icon: Wifi },
-            "Desconectado": { className: styles.securityDesconectado, icon: WifiOff },
-            "En sincronización": { className: styles.connectionSincronizacion, icon: Loader2, iconClassName: styles.iconSpin }
+        const connectionConfig: Record<string, { variant: BadgeProps['variant'], icon: any, iconClass?: string }> = {
+            "Conectado": { variant: "success", icon: Wifi },
+            "Desconectado": { variant: "secondary", icon: WifiOff },
+            "En sincronización": { variant: "default", icon: Loader2, iconClass: "spin" }
         };
 
-        const config = connectionConfig[status as string] || { className: "", icon: WifiOff };
+        const config = connectionConfig[status as string] || { variant: "secondary", icon: WifiOff };
         const Icon = config.icon;
 
         return (
-            <Badge className={config.className}>
-                <Icon className={cn(styles.icon, config.iconClassName)} />
+            <Badge variant={config.variant}>
+                <Icon className={cn("h-4 w-4", config.iconClass)} />
                 {status}
             </Badge>
         );
