@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge/Badge";
 import { useToast } from "@/components/ui/Toast/Toast";
 import { Shield, CheckCircle } from "lucide-react";
 import { mockPolicies } from "@/lib/mockData";
+import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 export default function Politicas() {
     // Initialize with all disabled as requested until fetched
@@ -104,31 +105,21 @@ export default function Politicas() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Políticas Activas</CardTitle>
-                        <Shield className="h-4 w-4 text-success" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{habilitadas}</div>
-                        <p className="text-xs text-muted-foreground">
-                            de {politicas.length} políticas disponibles
-                        </p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Políticas Activas"
+                    value={habilitadas}
+                    description={`de ${politicas.length} políticas disponibles`}
+                    icon={<Shield />}
+                    iconColor="text-success"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Equipos Protegidos</CardTitle>
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">8</div>
-                        <p className="text-xs text-muted-foreground">
-                            Todas las políticas se aplican automáticamente
-                        </p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Equipos Protegidos"
+                    value={8}
+                    description="Todas las políticas se aplican automáticamente"
+                    icon={<CheckCircle />}
+                    iconColor="text-primary"
+                />
             </div>
 
             <Card>

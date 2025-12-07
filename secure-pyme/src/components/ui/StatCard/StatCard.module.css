@@ -1,0 +1,52 @@
+.cardHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+    /* Ensure no vertical spacing between children */
+    gap: 0;
+}
+
+.cardHeader>*+* {
+    margin-top: 0 !important;
+}
+
+.cardTitle {
+    font-size: 0.875rem;
+    /* sm */
+    font-weight: 500;
+    margin: 0;
+}
+
+.cardValue {
+    font-size: 1.5rem;
+    /* 2xl */
+    font-weight: 700;
+    line-height: 2rem;
+}
+
+.cardLabel {
+    font-size: 0.75rem;
+    /* xs */
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+/* Border color variants for dashboard */
+.borderSuccess {
+    border-left: 4px solid hsl(var(--success));
+}
+
+.borderWarning {
+    border-left: 4px solid hsl(var(--warning));
+}
+
+.borderDanger {
+    border-left: 4px solid hsl(var(--danger));
+}
+
+.borderPrimary {
+    border-left: 4px solid hsl(var(--primary));
+}

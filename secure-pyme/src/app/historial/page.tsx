@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge/Badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table";
 import { CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 // Types extracted locally
 interface Incident {
@@ -75,38 +76,29 @@ export default function Historial() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Resueltos</CardTitle>
-                        <CheckCircle2 className="h-4 w-4 text-success" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{resueltos}</div>
-                        <p className="text-xs text-muted-foreground">Completamente solucionados</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Resueltos"
+                    value={resueltos}
+                    description="Completamente solucionados"
+                    icon={<CheckCircle2 />}
+                    iconColor="text-success"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Mitigados</CardTitle>
-                        <AlertCircle className="h-4 w-4 text-warning" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{mitigados}</div>
-                        <p className="text-xs text-muted-foreground">Riesgo reducido</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Mitigados"
+                    value={mitigados}
+                    description="Riesgo reducido"
+                    icon={<AlertCircle />}
+                    iconColor="text-warning"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">En Investigación</CardTitle>
-                        <Clock className="h-4 w-4 text-primary" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{enInvestigacion}</div>
-                        <p className="text-xs text-muted-foreground">Análisis en curso</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="En Investigación"
+                    value={enInvestigacion}
+                    description="Análisis en curso"
+                    icon={<Clock />}
+                    iconColor="text-primary"
+                />
             </div>
 
             <Card>

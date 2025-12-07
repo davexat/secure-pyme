@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { HardDrive, CheckCircle, Clock, XCircle, Download, File, RefreshCw } from "lucide-react";
 import { Progress } from "@/components/ui/Progress";
 import { Checkbox } from "@/components/ui/Checkbox";
+import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 interface Backup {
     id: string;
@@ -174,40 +175,29 @@ export default function Respaldos() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Respaldos Verificados</CardTitle>
-                        <CheckCircle className="h-4 w-4 text-success" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{verificados}</div>
-                        <p className="text-xs text-muted-foreground">Integridad confirmada</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Respaldos Verificados"
+                    value={verificados}
+                    description="Integridad confirmada"
+                    icon={<CheckCircle />}
+                    iconColor="text-success"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">En Verificación</CardTitle>
-                        <Clock className="h-4 w-4 text-warning" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{pendientes}</div>
-                        <p className="text-xs text-muted-foreground">Proceso en curso</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="En Verificación"
+                    value={pendientes}
+                    description="Proceso en curso"
+                    icon={<Clock />}
+                    iconColor="text-warning"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Total Almacenado</CardTitle>
-                        <HardDrive className="h-4 w-4 text-primary" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">
-                            {mockBackups.reduce((acc, b) => acc + parseInt(b.tamaño), 0)} GB
-                        </div>
-                        <p className="text-xs text-muted-foreground">Espacio utilizado</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Total Almacenado"
+                    value={`${mockBackups.reduce((acc, b) => acc + parseInt(b.tamaño), 0)} GB`}
+                    description="Espacio utilizado"
+                    icon={<HardDrive />}
+                    iconColor="text-primary"
+                />
             </div>
 
             <Card>

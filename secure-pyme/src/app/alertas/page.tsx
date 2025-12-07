@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/Dialog";
 import { useToast } from "@/hooks/use-toast";
 import { AlertTriangle, CheckCircle, HelpCircle } from "lucide-react";
+import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 import { Alert } from "@/types";
 import styles from "./page.module.css";
@@ -54,40 +55,29 @@ export default function Alertas() {
             </div>
 
             <div className={styles.statsGrid}>
-                <Card>
-                    <CardHeader className={styles.statCardHeader}>
-                        <CardTitle className={styles.statTitle}>Alertas Activas</CardTitle>
-                        <AlertTriangle className="h-4 w-4 text-danger" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className={styles.statValue}>{alertasActivas.length}</div>
-                        <p className={styles.statLabel}>Requieren atención</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Alertas Activas"
+                    value={alertasActivas.length}
+                    description="Requieren atención"
+                    icon={<AlertTriangle />}
+                    iconColor="text-danger"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Alertas Resueltas</CardTitle>
-                        <CheckCircle className="h-4 w-4 text-success" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className={styles.statValue}>{alertasResueltas.length}</div>
-                        <p className={styles.statLabel}>En las últimas 24h</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Alertas Resueltas"
+                    value={alertasResueltas.length}
+                    description="En las últimas 24h"
+                    icon={<CheckCircle />}
+                    iconColor="text-success"
+                />
 
-                <Card>
-                    <CardHeader className={styles.statCardHeader}>
-                        <CardTitle className={styles.statTitle}>Alertas Críticas</CardTitle>
-                        <AlertTriangle className="h-4 w-4 text-danger" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className={styles.statValue}>
-                            {alertasActivas.filter(a => a.nivel === "Alta").length}
-                        </div>
-                        <p className={styles.statLabel}>Prioridad alta</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Alertas Críticas"
+                    value={alertasActivas.filter(a => a.nivel === "Alta").length}
+                    description="Prioridad alta"
+                    icon={<AlertTriangle />}
+                    iconColor="text-danger"
+                />
             </div>
 
             <Card>

@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/Button/Button";
 import Link from 'next/link';
 import styles from './page.module.css';
-import { cn } from "@/lib/utils";
+import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 export default function Dashboard() {
   const seguros = mockEquipment.filter(e => e.estado_seguridad === "Seguro").length;
@@ -30,49 +30,41 @@ export default function Dashboard() {
       </div>
 
       <div className={styles.statusGrid}>
-        <Card className={styles.cardSafe}>
-          <CardHeader className={styles.cardHeader}>
-            <CardTitle className={styles.cardTitle}>Equipos Seguros</CardTitle>
-            <Shield className={cn("h-4 w-4", styles.textSuccess)} />
-          </CardHeader>
-          <CardContent>
-            <div className={styles.cardValue}>{porcentajeSeguro}%</div>
-            <p className={styles.cardLabel}>{seguros} de {mockEquipment.length} equipos</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Equipos Seguros"
+          value={`${porcentajeSeguro}%`}
+          description={`${seguros} de ${mockEquipment.length} equipos`}
+          icon={<Shield />}
+          iconColor="text-success"
+          borderColor="success"
+        />
 
-        <Card className={styles.cardWarning}>
-          <CardHeader className={styles.cardHeader}>
-            <CardTitle className={styles.cardTitle}>En Riesgo</CardTitle>
-            <AlertTriangle className={cn("h-4 w-4", styles.textWarning)} />
-          </CardHeader>
-          <CardContent>
-            <div className={styles.cardValue}>{porcentajeRiesgo}%</div>
-            <p className={styles.cardLabel}>{enRiesgo} equipos requieren atención</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="En Riesgo"
+          value={`${porcentajeRiesgo}%`}
+          description={`${enRiesgo} equipos requieren atención`}
+          icon={<AlertTriangle />}
+          iconColor="text-warning"
+          borderColor="warning"
+        />
 
-        <Card className={styles.cardDanger}>
-          <CardHeader className={styles.cardHeader}>
-            <CardTitle className={styles.cardTitle}>Amenazas Activas</CardTitle>
-            <Activity className={cn("h-4 w-4", styles.textDanger)} />
-          </CardHeader>
-          <CardContent>
-            <div className={styles.cardValue}>{amenazados}</div>
-            <p className={styles.cardLabel}>Requieren acción inmediata</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Amenazas Activas"
+          value={amenazados}
+          description="Requieren acción inmediata"
+          icon={<Activity />}
+          iconColor="text-danger"
+          borderColor="danger"
+        />
 
-        <Card className={styles.cardAlert}>
-          <CardHeader className={styles.cardHeader}>
-            <CardTitle className={styles.cardTitle}>Alertas Activas</CardTitle>
-            <HardDrive className={cn("h-4 w-4", styles.textPrimary)} />
-          </CardHeader>
-          <CardContent>
-            <div className={styles.cardValue}>{alertasActivas}</div>
-            <p className={styles.cardLabel}>Notificaciones pendientes</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Alertas Activas"
+          value={alertasActivas}
+          description="Notificaciones pendientes"
+          icon={<HardDrive />}
+          iconColor="text-primary"
+          borderColor="primary"
+        />
       </div>
 
       <Card>

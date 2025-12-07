@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge/Badge";
 import { Activity, AlertTriangle, TrendingUp, Globe } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from "recharts";
+import { StatCard } from "@/components/ui/StatCard/StatCard";
 
 const datosConexiones = [
     { hora: "00:00", conexiones: 45, sospechosas: 2 },
@@ -61,38 +62,29 @@ export default function Analisis() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Conexiones Activas</CardTitle>
-                        <Activity className="h-4 w-4 text-primary" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{conexionesActivas}</div>
-                        <p className="text-xs text-muted-foreground">En este momento</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Conexiones Activas"
+                    value={conexionesActivas}
+                    description="En este momento"
+                    icon={<Activity />}
+                    iconColor="text-primary"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Destinos Sospechosos</CardTitle>
-                        <AlertTriangle className="h-4 w-4 text-warning" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{conexionesSospechosas}</div>
-                        <p className="text-xs text-muted-foreground">Requieren revisión</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Destinos Sospechosos"
+                    value={conexionesSospechosas}
+                    description="Requieren revisión"
+                    icon={<AlertTriangle />}
+                    iconColor="text-warning"
+                />
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Picos de Tráfico</CardTitle>
-                        <TrendingUp className="h-4 w-4 text-success" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{picosTrafic}</div>
-                        <p className="text-xs text-muted-foreground">Últimas 24 horas</p>
-                    </CardContent>
-                </Card>
+                <StatCard
+                    title="Picos de Tráfico"
+                    value={picosTrafic}
+                    description="Últimas 24 horas"
+                    icon={<TrendingUp />}
+                    iconColor="text-success"
+                />
             </div>
 
             <Card>

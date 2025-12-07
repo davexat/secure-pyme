@@ -9,12 +9,14 @@
 .header {
     display: flex;
     flex-direction: column;
-    gap: 0.375rem; /* space-y-1.5 equivalent */
+    gap: 0.375rem;
+    /* space-y-1.5 equivalent */
     padding: 1.5rem;
 }
 
 .title {
-    font-size: 1.5rem; /* text-2xl */
+    font-size: 1.5rem;
+    /* text-2xl */
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.025em;
@@ -22,7 +24,8 @@
 }
 
 .description {
-    font-size: 0.875rem; /* text-sm */
+    font-size: 0.875rem;
+    /* text-sm */
     color: hsl(var(--muted-foreground));
     margin: 0;
 }

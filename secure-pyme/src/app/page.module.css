@@ -39,76 +39,6 @@
   }
 }
 
-/* Card content overrides if needed */
-.cardTitle {
-  font-size: 0.875rem;
-  /* sm */
-  font-weight: 500;
-  margin: 0;
-}
-
-.cardHeader {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 0.5rem;
-  margin-top: 0;
-}
-
-.cardHeader>*+* {
-  margin-top: 0 !important;
-  /* Override any space-y utility */
-}
-
-.cardValue {
-  font-size: 1.5rem;
-  /* 2xl */
-  font-weight: 700;
-  line-height: 2rem;
-}
-
-.cardLabel {
-  font-size: 0.75rem;
-  /* xs */
-  color: hsl(var(--muted-foreground));
-  margin: 0;
-}
-
-/* Specific Card Status Variants */
-.cardSafe {
-  border-left: 4px solid hsl(var(--success));
-}
-
-.cardWarning {
-  border-left: 4px solid hsl(var(--warning));
-}
-
-.cardDanger {
-  border-left: 4px solid hsl(var(--danger));
-}
-
-.cardAlert {
-  border-left: 4px solid hsl(var(--primary));
-}
-
-/* Icon Text Colors */
-.textSuccess {
-  color: hsl(var(--success));
-}
-
-.textWarning {
-  color: hsl(var(--warning));
-}
-
-.textDanger {
-  color: hsl(var(--danger));
-}
-
-.textPrimary {
-  color: hsl(var(--primary));
-}
-
 /* Table Area */
 .tableActions {
   margin-top: 1rem;
@@ -148,4 +78,12 @@
   /* sm */
   color: hsl(var(--muted-foreground));
   margin: 0;
+}
+
+.alertTeam {
+  font-weight: 500;
+}
+
+.equipmentName {
+  font-weight: 500;
 }
