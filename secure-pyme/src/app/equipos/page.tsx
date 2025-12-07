@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card/Card";
 import { mockEquipment } from "@/lib/mockData";
 import { StatusBadge } from "@/components/StatusBadge";
@@ -101,12 +101,15 @@ export default function Equipos() {
                 if (prev >= 100) {
                     clearInterval(intervalo);
                     setAccionEnProgreso(false);
-                    toast({
-                        title: "Acción completada",
-                        description: `${accion} en ${equipoNombre} finalizado exitosamente`,
-                        type: "success"
-                    });
-                    setDialogAbierto(false);
+                    // Move toast outside of setState to avoid rendering errors
+                    setTimeout(() => {
+                        toast({
+                            title: "Acción completada",
+                            description: `${accion} en ${equipoNombre} finalizado exitosamente`,
+                            type: "success"
+                        });
+                        setDialogAbierto(false);
+                    }, 0);
                     return 100;
                 }
                 return prev + 20;
