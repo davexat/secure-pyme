@@ -31,7 +31,7 @@
 
 .securityDesconectado {
     background-color: hsl(var(--secondary)) !important;
-    color: hsl(var(--secondary-foreground));
+    color: hsl(var(--foreground));
 }
 
 /* Connection Statuses */
@@ -49,8 +49,9 @@
 
 /* Alert Levels */
 .alertBaja {
-    background-color: hsl(var(--secondary)) !important;
-    color: hsl(var(--secondary-foreground));
+    background-color: hsl(var(--success)) !important;
+    color: hsl(var(--success-foreground));
+    border-color: transparent;
 }
 
 .alertMedia {
@@ -86,4 +87,8 @@
     margin-right: 0.375rem;
     display: inline-block;
     /* Ensure icon behaves correctly alongside text */
+}
+
+.iconSpin {
+    animation: spin 1.5s linear infinite;
 }

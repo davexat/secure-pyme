@@ -56,6 +56,11 @@
   margin-top: 0;
 }
 
+.cardHeader>*+* {
+  margin-top: 0 !important;
+  /* Override any space-y utility */
+}
+
 .cardValue {
   font-size: 1.5rem;
   /* 2xl */

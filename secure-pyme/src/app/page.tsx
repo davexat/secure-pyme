@@ -86,10 +86,8 @@ export default function Dashboard() {
               <TableRow>
                 <TableHead>Equipo</TableHead>
                 <TableHead>Usuario</TableHead>
-                <TableHead>Ubicación</TableHead>
                 <TableHead>Estado Seguridad</TableHead>
                 <TableHead>Conexión Agente</TableHead>
-                {/* <TableHead>Plan</TableHead> Removed */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -97,14 +95,12 @@ export default function Dashboard() {
                 <TableRow key={equipo.id}>
                   <TableCell className="font-medium">{equipo.nombre}</TableCell>
                   <TableCell>{equipo.usuario}</TableCell>
-                  <TableCell>{equipo.ubicacion}</TableCell>
                   <TableCell>
                     <StatusBadge status={equipo.estado_seguridad} type="security" />
                   </TableCell>
                   <TableCell>
                     <StatusBadge status={equipo.estado_conexion_agente} type="connection" />
                   </TableCell>
-                  {/* <TableCell>{equipo.plan}</TableCell> Removed */}
                 </TableRow>
               ))}
             </TableBody>

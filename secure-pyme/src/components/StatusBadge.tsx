@@ -48,10 +48,10 @@ export function StatusBadge({ status, type }: StatusBadgeProps) {
     }
 
     if (type === "connection") {
-        const connectionConfig: Record<string, { className: string, icon: any }> = {
+        const connectionConfig: Record<string, { className: string, icon: any, iconClassName?: string }> = {
             "Conectado": { className: styles.connectionConectado, icon: Wifi },
             "Desconectado": { className: styles.securityDesconectado, icon: WifiOff },
-            "En sincronización": { className: cn(styles.connectionSincronizacion, styles.spin), icon: Loader2 }
+            "En sincronización": { className: styles.connectionSincronizacion, icon: Loader2, iconClassName: styles.iconSpin }
         };
 
         const config = connectionConfig[status as string] || { className: "", icon: WifiOff };
@@ -59,7 +59,7 @@ export function StatusBadge({ status, type }: StatusBadgeProps) {
 
         return (
             <Badge className={config.className}>
-                <Icon className={styles.icon} />
+                <Icon className={cn(styles.icon, config.iconClassName)} />
                 {status}
             </Badge>
         );
